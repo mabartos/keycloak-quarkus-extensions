@@ -40,6 +40,7 @@
             <plugin>
                 <groupId>io.quarkus</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
+                <version>${quarkus.version}</version>
             </plugin>
             <plugin>
                 <groupId>io.quarkus</groupId>
@@ -51,8 +52,7 @@
                         </goals>
                         <phase>compile</phase>
                         <configuration>
-                            <deployment>${project.groupId}:${parent.artifactId}-deployment:${project.version}
-                            </deployment>
+                            <deployment>${project.groupId}:${project.parent.artifactId}-deployment:${project.version}</deployment>
                             <capabilities>
                                 <provides>io.quarkus.logging.gelf</provides>
                             </capabilities>
