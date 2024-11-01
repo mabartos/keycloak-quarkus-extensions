@@ -44,7 +44,7 @@
         </fileSet>
 
         <fileSet>
-            <directory>../server/target/lib</directory>
+            <directory>${project.build.directory}/lib</directory>
             <outputDirectory>lib</outputDirectory>
             <includes>
                 <include>**/**</include>
