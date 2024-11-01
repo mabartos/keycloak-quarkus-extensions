@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <keycloak.version>26.0.1</keycloak.version>
+        <keycloak.version>26.0.5</keycloak.version>
         <quarkus.version>3.15.1</quarkus.version>
 
         <keycloak.distribution.path>${project.build.directory}/unpacked/keycloak-${keycloak.version}</keycloak.distribution.path>
