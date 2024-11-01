@@ -12,6 +12,7 @@ show_help() {
     echo "  add <extension(s)>        Adds one or more Quarkus/Quarkiverse extensions."
     echo "  build                     Rebuild the Keycloak distribution with custom extensions."
     echo "  list                      Displays all available extensions."
+    echo "  start-dev                 Executes the generated Keycloak distribution in development mode."
 }
 
 # Function to show help message for build command
@@ -64,7 +65,6 @@ case "$command" in
 
         # Store all provided strings into a variable
         extensions="$@"
-
         ./mvnw -f runtime/pom.xml quarkus:add-extension -Dextensions="$extensions"
 
         echo "-------------------------------------------------------------------------------------------------------------------------------------------------------------"
@@ -135,12 +135,41 @@ case "$command" in
 
         # Build logic goes here using $keycloak_version, $quarkus_version, or $distPath variables
         echo "Executing build with '--keycloak-version': $keycloak_version, '--quarkus-version': $quarkus_version, and '--distPath': ${distPath:-N/A}"
-
         ./mvnw clean install -DskipTests -Dkeycloak.version="$keycloak_version" -Dquarkus.version="$quarkus_version"
         ;;
 
     list)
         ./mvnw -f runtime/pom.xml quarkus:list-extensions
+        ;;
+
+    start-dev)
+        # Check if target directory is empty
+        if [ ! -d "target" ] || [ -z "$(ls -A target)" ]; then
+            echo "Error: No generated Keycloak distribution found. Please run 'build' command first."
+            exit 1
+        fi
+
+        # Find the Keycloak distribution zip file in the target directory
+        keycloak_zip=$(find target -maxdepth 1 -name 'keycloak*.zip' | head -n 1)
+
+        # Check if the zip file was found
+        if [ -z "$keycloak_zip" ]; then
+            echo "Error: No Keycloak distribution zip file found in target directory."
+            exit 1
+        fi
+
+        # Unzip the distribution
+        echo "Unzipping Keycloak distribution from: $keycloak_zip"
+        unzip -q "$keycloak_zip" -d target/
+
+        # Change to the directory of the unzipped distribution
+        keycloak_dir=$(basename "$keycloak_zip" .zip)
+        cd "target/$keycloak_dir" || exit
+
+        # Start Keycloak in development mode
+        echo "Starting Keycloak in development mode..."
+        # Modify this command as needed for your specific distribution structure
+        ./bin/kc.sh start-dev
         ;;
 
     -h|--help)
