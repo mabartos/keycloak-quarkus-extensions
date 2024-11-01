@@ -28,8 +28,7 @@
     <modules>
         <module>runtime</module>
         <module>deployment</module>
-        <module>server</module>
-        <module>dist</module>
+        <module>resolver</module>
     </modules>
 
     <dependencyManagement>
