@@ -17,12 +17,14 @@ show_help() {
 
 # Function to show help message for build command
 show_help_build() {
+    echo "Build Keycloak distribution with provided Quarkus/Quarkiverse extensions"
+    echo
     echo "Usage: $0 build [OPTIONS]"
     echo
     echo "Options:"
-    echo "  --keycloak-version <version>    Specifies the Keycloak version (optional). Defaults to version from 'pom.xml' if not provided."
-    echo "  --quarkus-version <version>     Specifies the Quarkus version (optional). Defaults to version from 'pom.xml' if not provided."
-    echo "  --distPath <path>               Specifies the distribution path (optional)."
+    echo "  --keycloak-version <version>    Specifies the Keycloak version. Defaults to version from 'pom.xml' if not provided."
+    echo "  --quarkus-version <version>     Specifies the Quarkus version. Defaults to version from 'pom.xml' if not provided."
+    echo "  --distPath <path>               Specifies the distribution path."
     echo "  -h, --help                      Displays this help message."
 }
 
