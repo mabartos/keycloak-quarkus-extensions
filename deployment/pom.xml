@@ -23,6 +23,7 @@
             <version>${project.version}</version>
         </dependency>
         <!-- Add your deployment Quarkus/Quarkiverse extensions HERE -->
+        <!-- NOTE: Do not forget to include the automatically added extensions in /runtime with '-deployment' suffix to artifactId here -->
         <!-- BEGIN -->
 
         <dependency>
@@ -41,11 +42,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-maven-plugin</artifactId>
-                <version>${quarkus.version}</version>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
