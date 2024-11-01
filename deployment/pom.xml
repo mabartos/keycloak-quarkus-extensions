@@ -11,12 +11,7 @@
     </parent>
 
     <artifactId>keycloak-quarkus-extensions-deployment</artifactId>
-
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <description>Keycloak Quarkus Extensions Deployment</description>
 
     <dependencies>
         <dependency>
@@ -29,6 +24,9 @@
             <artifactId>keycloak-quarkus-extensions-runtime</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- Add your deployment Quarkus/Quarkiverse extensions HERE -->
+        <!-- BEGIN -->
+
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-logging-gelf-deployment</artifactId>
@@ -39,6 +37,8 @@
             <artifactId>quarkus-langchain4j-openai-deployment</artifactId>
             <version>0.20.3</version>
         </dependency>
+
+        <!-- END -->
     </dependencies>
 
     <build>
