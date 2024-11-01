@@ -81,35 +81,32 @@ case "$command" in
         # Process parameters for `build`
         while [[ $# -gt 0 ]]; do
             case "$1" in
-                --keycloak-version)
-                    shift
-                    if [[ -n "$1" ]]; then
-                        keycloak_version="$1"
-                        echo "Keycloak version set to: $keycloak_version"
-                    else
+                --keycloak-version*)
+                    # Extract value from option
+                    keycloak_version="${1#*=}"
+                    if [[ -z "$keycloak_version" || "$keycloak_version" == "$1" ]]; then
                         echo "Error: Missing value for --keycloak-version."
                         exit 1
                     fi
+                    echo "Keycloak version set to: $keycloak_version"
                     ;;
-                --quarkus-version)
-                    shift
-                    if [[ -n "$1" ]]; then
-                        quarkus_version="$1"
-                        echo "Quarkus version set to: $quarkus_version"
-                    else
+                --quarkus-version*)
+                    # Extract value from option
+                    quarkus_version="${1#*=}"
+                    if [[ -z "$quarkus_version" || "$quarkus_version" == "$1" ]]; then
                         echo "Error: Missing value for --quarkus-version."
                         exit 1
                     fi
+                    echo "Quarkus version set to: $quarkus_version"
                     ;;
-                --distPath)
-                    shift
-                    if [[ -n "$1" ]]; then
-                        distPath="$1"
-                        echo "Distribution path set to: $distPath"
-                    else
+                --distPath*)
+                    # Extract value from option
+                    distPath="${1#*=}"
+                    if [[ -z "$distPath" || "$distPath" == "$1" ]]; then
                         echo "Error: Missing value for --distPath."
                         exit 1
                     fi
+                    echo "Distribution path set to: $distPath"
                     ;;
                 -h|--help)
                     show_help_build
@@ -138,6 +135,8 @@ case "$command" in
 
         # Build logic goes here using $keycloak_version, $quarkus_version, or $distPath variables
         echo "Executing build with '--keycloak-version': $keycloak_version, '--quarkus-version': $quarkus_version, and '--distPath': ${distPath:-N/A}"
+
+        ./mvnw clean install -DskipTests -Dkeycloak.version="$keycloak_version" -Dquarkus.version="$quarkus_version"
         ;;
 
     list)
