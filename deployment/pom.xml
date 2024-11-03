@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>keycloak-quarkus-extensions-deployment</artifactId>
-    <description>Keycloak Quarkus Extensions Deployment</description>
+    <name>Keycloak Quarkus Extensions Deployment</name>
 
     <dependencies>
         <dependency>

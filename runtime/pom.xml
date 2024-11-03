@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>keycloak-quarkus-extensions-runtime</artifactId>
-    <description>Keycloak Quarkus Extensions Runtime</description>
+    <name>Keycloak Quarkus Extensions Runtime</name>
 
     <dependencies>
         <dependency>

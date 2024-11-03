@@ -12,7 +12,7 @@
 
     <groupId>org.keycloak.adaptive</groupId>
     <artifactId>keycloak-quarkus-extensions-resolver</artifactId>
-    <description>Keycloak Quarkus Extensions Final Resolver</description>
+    <name>Keycloak Quarkus Extensions Final Resolver</name>
 
     <dependencies>
         <dependency>
