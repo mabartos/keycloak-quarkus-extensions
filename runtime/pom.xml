@@ -17,7 +17,7 @@
             <artifactId>keycloak-quarkus-server</artifactId>
             <version>${keycloak.version}</version>
         </dependency>
-        <!-- Add your deployment Quarkus/Quarkiverse extensions HERE -->
+        <!-- Add your runtime Quarkus/Quarkiverse extensions HERE -->
         <!-- BEGIN -->
 
         <dependency>

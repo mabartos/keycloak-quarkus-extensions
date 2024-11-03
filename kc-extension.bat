@@ -32,7 +32,7 @@ echo   -h, --help                      Displays this help message.
 exit /b
 
 :get_keycloak_version_from_pom
-for /f "tokens=2 delims=><" %%a in ('findstr "<keycloak.version>" pom.xml') do (
+for /f %%a in ('call ./mvnw help:evaluate -Dexpression=keycloak.version -q -DforceStdout') do (
     set "version=%%a"
 )
 if "%version%"=="" (
@@ -42,7 +42,7 @@ if "%version%"=="" (
 exit /b
 
 :get_quarkus_version_from_pom
-for /f "tokens=2 delims=><" %%a in ('findstr "<quarkus.version>" pom.xml') do (
+for /f %%a in ('call ./mvnw help:evaluate -Dexpression=quarkus.version -q -DforceStdout') do (
     set "version=%%a"
 )
 if "%version%"=="" (

@@ -30,8 +30,8 @@ show_help_build() {
 
 # Function to get keycloak.version from pom.xml
 get_keycloak_version_from_pom() {
-    # Extract the keycloak.version using grep
-    version=$(grep -oPm1 "(?<=<keycloak.version>)[^<]+" pom.xml)
+    # Extract the keycloak.version
+    version=$(./mvnw help:evaluate -Dexpression=keycloak.version -q -DforceStdout)
     # Check if version was found
     if [[ -z "$version" ]]; then
         echo "Error: No keycloak.version found in pom.xml."
@@ -42,8 +42,8 @@ get_keycloak_version_from_pom() {
 
 # Function to get quarkus.version from pom.xml
 get_quarkus_version_from_pom() {
-    # Extract the quarkus.version using grep
-    version=$(grep -oPm1 "(?<=<quarkus.version>)[^<]+" pom.xml)
+    # Extract the quarkus.version
+    version=$(./mvnw help:evaluate -Dexpression=quarkus.version -q -DforceStdout)
     # Check if version was found
     if [[ -z "$version" ]]; then
         echo "Error: No quarkus.version found in pom.xml."
