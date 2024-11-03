@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
 show_help() {
     echo "Add Quarkus/Quarkiverse extensions to your Keycloak deployment"
     echo
@@ -31,7 +33,7 @@ show_help_build() {
 # Function to get keycloak.version from pom.xml
 get_keycloak_version_from_pom() {
     # Extract the keycloak.version
-    version=$(./mvnw help:evaluate -Dexpression=keycloak.version -q -DforceStdout)
+    version=$("$SCRIPT_DIR"/mvnw -f "$SCRIPT_DIR"/pom.xml help:evaluate -Dexpression=keycloak.version -q -DforceStdout)
     # Check if version was found
     if [[ -z "$version" ]]; then
         echo "Error: No keycloak.version found in pom.xml."
@@ -43,7 +45,7 @@ get_keycloak_version_from_pom() {
 # Function to get quarkus.version from pom.xml
 get_quarkus_version_from_pom() {
     # Extract the quarkus.version
-    version=$(./mvnw help:evaluate -Dexpression=quarkus.version -q -DforceStdout)
+    version=$("$SCRIPT_DIR"/mvnw -f "$SCRIPT_DIR"/pom.xml help:evaluate -Dexpression=quarkus.version -q -DforceStdout)
     # Check if version was found
     if [[ -z "$version" ]]; then
         echo "Error: No quarkus.version found in pom.xml."
@@ -67,7 +69,7 @@ case "$command" in
 
         # Store all provided strings into a variable
         extensions="$@"
-        ./mvnw -f runtime/pom.xml quarkus:add-extension -Dextensions="$extensions"
+        "$SCRIPT_DIR"/mvnw -f "$SCRIPT_DIR"/runtime/pom.xml quarkus:add-extension -Dextensions="$extensions"
 
         echo "-------------------------------------------------------------------------------------------------------------------------------------------------------------"
         echo "WARNING: Do not forget to add the same extension present in runtime/pom.xml to the deployment/pom.xml with the suffix '-deployment' in artifactId (if exists)"
@@ -137,22 +139,22 @@ case "$command" in
 
         # Build logic goes here using $keycloak_version, $quarkus_version, or $distPath variables
         echo "Executing build with '--keycloak-version': $keycloak_version, '--quarkus-version': $quarkus_version, and '--distPath': ${distPath:-N/A}"
-        ./mvnw clean install -DskipTests -Dkeycloak.version="$keycloak_version" -Dquarkus.version="$quarkus_version"
+        "$SCRIPT_DIR"/mvnw clean install -f "$SCRIPT_DIR"/pom.xml -DskipTests -Dkeycloak.version="$keycloak_version" -Dquarkus.version="$quarkus_version"
         ;;
 
     list)
-        ./mvnw -f runtime/pom.xml quarkus:list-extensions
+        "$SCRIPT_DIR"/mvnw -f "$SCRIPT_DIR"/runtime/pom.xml quarkus:list-extensions
         ;;
 
     start-dev)
         # Check if target directory is empty
-        if [ ! -d "target" ] || [ -z "$(ls -A target)" ]; then
+        if [ ! -d "$SCRIPT_DIR/target" ] || [ -z "$(ls -A "$SCRIPT_DIR"/target)" ]; then
             echo "Error: No generated Keycloak distribution found. Please run 'build' command first."
             exit 1
         fi
 
         # Find the Keycloak distribution zip file in the target directory
-        keycloak_zip=$(find target -maxdepth 1 -name 'keycloak*.zip' | head -n 1)
+        keycloak_zip=$(find "$SCRIPT_DIR"/target -maxdepth 1 -name 'keycloak*.zip' | head -n 1)
 
         # Check if the zip file was found
         if [ -z "$keycloak_zip" ]; then
@@ -162,11 +164,11 @@ case "$command" in
 
         # Unzip the distribution
         echo "Unzipping Keycloak distribution from: $keycloak_zip"
-        unzip -q "$keycloak_zip" -d target/
+        unzip -q "$keycloak_zip" -d "$SCRIPT_DIR"/target/
 
         # Change to the directory of the unzipped distribution
         keycloak_dir=$(basename "$keycloak_zip" .zip)
-        cd "target/$keycloak_dir" || exit
+        cd "$SCRIPT_DIR/target/$keycloak_dir" || exit
 
         # Start Keycloak in development mode
         echo "Starting Keycloak in development mode..."
