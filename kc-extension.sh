@@ -213,7 +213,7 @@ case "$command" in
         # Build logic goes here using $keycloak_version, $quarkus_version, or $distPath variables
         echo "Executing build with '--keycloak-version': $keycloak_version, '--quarkus-version': $quarkus_version, and '--distPath': ${distPath:-N/A}"
         echo "Additional properties: $additional_properties"
-        "$SCRIPT_DIR"/mvnw clean install -f "$SCRIPT_DIR"/pom.xml -DskipTests -Dkeycloak.version="$keycloak_version" -Dquarkus.version="$quarkus_version" "$additional_properties"
+        "$SCRIPT_DIR"/mvnw clean install -f "$SCRIPT_DIR"/pom.xml -DskipTests -Dkeycloak.version="$keycloak_version" -Dquarkus.version="$quarkus_version" $additional_properties
         ;;
 
     list)
