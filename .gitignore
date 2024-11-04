@@ -1,3 +1,5 @@
+keycloak-extended-*.zip
+keycloak-extended-*.tar.gz
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
