@@ -5,16 +5,16 @@ Easily add Quarkus/Quarkiverse extension to your Keycloak distribution.
 ```shell
 Add Quarkus/Quarkiverse extensions to your Keycloak deployment
 
-Usage: ./kc-extension.sh [OPTIONS] <command>
+Usage: ../kc-extension.sh [OPTIONS] <command>
 
 Options:
--h, --help                Displays this help message.
+  -h, --help                Display this help message.
 
 Commands:
-add <extension(s)>        Adds one or more Quarkus/Quarkiverse extensions.
-build                     Rebuild the Keycloak distribution with custom extensions.
-list                      Displays all available extensions.
-start-dev                 Executes the generated Keycloak distribution in development mode.
+  add <extension>           Add Quarkus/Quarkiverse extension.
+  build                     Rebuild the Keycloak distribution with custom extensions.
+  list                      Display all available extensions.
+  start-dev                 Execute the generated Keycloak distribution in development mode.
 ```
 
 **INFO**: Work is still in a progress and code MAY change!

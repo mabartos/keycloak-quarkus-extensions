@@ -8,13 +8,13 @@ show_help() {
     echo "Usage: $0 [OPTIONS] <command>"
     echo
     echo "Options:"
-    echo "  -h, --help                Displays this help message."
+    echo "  -h, --help                Display this help message."
     echo
     echo "Commands:"
-    echo "  add <extension(s)>        Adds one or more Quarkus/Quarkiverse extensions."
+    echo "  add <extension>           Add Quarkus/Quarkiverse extension."
     echo "  build                     Rebuild the Keycloak distribution with custom extensions."
-    echo "  list                      Displays all available extensions."
-    echo "  start-dev                 Executes the generated Keycloak distribution in development mode."
+    echo "  list                      Display all available extensions."
+    echo "  start-dev                 Execute the generated Keycloak distribution in development mode."
 }
 
 # Function to show help message for build command
@@ -111,7 +111,10 @@ case "$command" in
     add)
         # Check if additional arguments were provided
         if [ $# -eq 0 ]; then
-            echo "Error: No extensions name provided."
+            echo "Error: No extension name provided."
+            exit 1
+        elif [ $# -gt 1 ]; then
+            echo "Error: You can specify only one extension at a time."
             exit 1
         fi
         artifactId="$1"
