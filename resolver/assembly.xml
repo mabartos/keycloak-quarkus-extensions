@@ -32,6 +32,7 @@
             <excludes>
                 <exclude>lib/</exclude>
                 <exclude>conf/keycloak.conf</exclude>
+                <exclude>conf/application.properties</exclude>
             </excludes>
         </fileSet>
 

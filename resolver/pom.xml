@@ -67,7 +67,7 @@
                 <executions>
                     <execution>
                         <id>assemble</id>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
@@ -108,7 +108,7 @@
                     </execution>
                     <execution>
                         <id>copy-distribution-zip</id>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>

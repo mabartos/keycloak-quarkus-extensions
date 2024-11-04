@@ -221,20 +221,16 @@ case "$command" in
         ;;
 
     start-dev)
-        # Check if target directory is empty
-        if [ ! -d "$SCRIPT_DIR/target" ] || [ -z "$(ls -A "$SCRIPT_DIR"/target)" ]; then
-            echo "Error: No generated Keycloak distribution found. Please run 'build' command first."
-            exit 1
-        fi
-
         # Find the Keycloak distribution zip file in the target directory
-        keycloak_zip=$(find "$SCRIPT_DIR"/target -maxdepth 1 -name 'keycloak-extended-*.zip' | head -n 1)
+        keycloak_zip=$(find "$SCRIPT_DIR" -maxdepth 1 -name 'keycloak-extended-*.zip' | head -n 1)
 
         # Check if the zip file was found
         if [ -z "$keycloak_zip" ]; then
             echo "Error: No Keycloak distribution zip file found in target directory."
             exit 1
         fi
+
+        rm -rf "$SCRIPT_DIR"/target/
 
         # Unzip the distribution
         echo "Unzipping Keycloak distribution from: $keycloak_zip"
@@ -244,9 +240,13 @@ case "$command" in
         keycloak_dir=$(basename "$keycloak_zip" .zip)
         cd "$SCRIPT_DIR/target/$keycloak_dir" || exit
 
-        # Start Keycloak in development mode
+        if [ ! -d "bin/" ]; then
+            echo "Error: You probably built distribution with --container flag. Please rebuild it again without it."
+            exit 1
+        fi
+
         echo "Starting Keycloak in development mode..."
-        # Modify this command as needed for your specific distribution structure
+
         ./bin/kc.sh start-dev
         ;;
 
