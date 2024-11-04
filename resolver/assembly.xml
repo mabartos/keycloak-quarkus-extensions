@@ -24,7 +24,7 @@
 
     <fileSets>
         <fileSet>
-            <directory>${project.build.directory}/unpacked/keycloak-${keycloak.version}</directory>
+            <directory>${keycloak.distribution.path}</directory>
             <outputDirectory/>
             <includes>
                 <include>**/**</include>

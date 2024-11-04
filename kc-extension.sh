@@ -54,6 +54,54 @@ get_quarkus_version_from_pom() {
     echo "$version"
 }
 
+# Explicitly add dependency to specific pom.xml file
+add_dependency() {
+    local groupId="$1"
+    local artifactId="$2"
+    local version="$3"
+    local pomFile="$4"
+    local show_version="$5"
+
+    # Build the dependency snippet based on whether version is provided or not
+    local dependencySnippet="\t\t<dependency>\n\
+    \t\t<groupId>${groupId}</groupId>\n\
+    \t\t<artifactId>${artifactId}</artifactId>\n"
+
+    if [[ "$show_version" == true ]]; then
+        dependencySnippet+="\t\t\t<version>${version}</version>\n"
+    fi
+
+    dependencySnippet+="\t\t</dependency>"
+
+    # Insert the dependency XML snippet just before the closing </dependencies> tag
+    sed -i "/<\/dependencies>/ i \\
+$dependencySnippet" "$pomFile"
+}
+
+# Handle adding extension for deployment/pom.xml and for particular platform BOM
+handle_add_extension_for_platform() {
+    local groupId="$1"
+    local artifactId="$2"
+    local version="$3"
+    local show_version="$4"
+
+    echo "Handling extension with groupId '$groupId'."
+    deployment_artifact_id="${artifactId}-deployment"
+
+    "$SCRIPT_DIR"/mvnw dependency:get -Dartifact="${groupId}:${deployment_artifact_id}:${version}"
+
+    if [[ $? -eq 0 ]]; then
+        if "$SCRIPT_DIR"/mvnw -f "$SCRIPT_DIR"/deployment/pom.xml dependency:tree | grep -q "${groupId}:${deployment_artifact_id}"; then
+            echo "Deployment dependency ('$deployment_artifact_id') is already part of deployment/pom.xml. Ignoring adding."
+        else
+            add_dependency "$groupId" "$deployment_artifact_id" "$version" "$SCRIPT_DIR"/deployment/pom.xml "$show_version"
+            echo "Automatically added -deployment dependency ('$deployment_artifact_id')."
+        fi
+    else
+        echo "Deployment dependency '$deployment_artifact_id' does not exist (exit code $?). Please, revisit the 'deployment/pom.xml'."
+    fi
+}
+
 # Store the subcommand and shift it out of the argument list
 command="${1:-help}"
 shift
@@ -66,14 +114,30 @@ case "$command" in
             echo "Error: No extensions name provided."
             exit 1
         fi
+        artifactId="$1"
 
-        # Store all provided strings into a variable
-        extensions="$@"
-        "$SCRIPT_DIR"/mvnw -f "$SCRIPT_DIR"/runtime/pom.xml quarkus:add-extension -Dextensions="$extensions"
+        output=$("$SCRIPT_DIR"/mvnw -f "$SCRIPT_DIR"/runtime/pom.xml quarkus:list-extensions -Dformat=origins | grep -w "$artifactId" | head -n 1)
 
-        echo "-------------------------------------------------------------------------------------------------------------------------------------------------------------"
-        echo "WARNING: Do not forget to add the same extension present in runtime/pom.xml to the deployment/pom.xml with the suffix '-deployment' in artifactId (if exists)"
-        echo "-------------------------------------------------------------------------------------------------------------------------------------------------------------"
+        # Extract extension name, version, and BOM info
+        extension_name=$(echo "$output" | awk '{print ($2 == "✬" ? $3 : $2)}')
+        version=$(echo "$output" | awk '{print $(NF-1)}')
+        bom_info=$(echo "$output" | awk '{print $NF}')
+
+        echo "Extension Name: $extension_name"
+        echo "ArtifactId: $artifactId"
+        echo "Version: $version"
+        echo "BOM Info: $bom_info"
+
+        if [[ $bom_info == io.quarkus.platform:quarkus-bom:* ]]; then
+            echo "BOM info starts with 'io.quarkus.platform:quarkus-bom:'."
+            handle_add_extension_for_platform io.quarkus "$artifactId" "$version" false
+        else
+            echo "-------------------------------------------------------------------------------------------------------------------------------------------------------------"
+            echo "WARNING: Do not forget to add the same extension present in runtime/pom.xml to the deployment/pom.xml with the suffix '-deployment' in artifactId (if exists)"
+            echo "-------------------------------------------------------------------------------------------------------------------------------------------------------------"
+        fi
+
+        "$SCRIPT_DIR"/mvnw -f "$SCRIPT_DIR"/runtime/pom.xml quarkus:add-extension -Dextension="$artifactId"
         ;;
 
     build)
