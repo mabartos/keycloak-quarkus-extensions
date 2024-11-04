@@ -37,9 +37,10 @@ Build Keycloak distribution with provided Quarkus/Quarkiverse extensions
 Usage: ./kc-extension.sh build [OPTIONS]
 
 Options:
-  --keycloak-version <version>    Specifies the Keycloak version. Defaults to version from 'pom.xml' if not provided.
-  --quarkus-version <version>     Specifies the Quarkus version. Defaults to version from 'pom.xml' if not provided.
-  --distPath <path>               Specifies the distribution path.
+  --keycloak-version <version>    Specify the Keycloak version. Defaults to version from 'pom.xml' if not provided.
+  --quarkus-version <version>     Specify the Quarkus version. Defaults to version from 'pom.xml' if not provided.
+  --distPath <path>               Specify the distribution path.
+  --container                     Specify the build is run in container. No external distribution is fetched and only necessary files are generated.
   -h, --help                      Displays this help message.
 ```
 

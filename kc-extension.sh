@@ -24,9 +24,10 @@ show_help_build() {
     echo "Usage: $0 build [OPTIONS]"
     echo
     echo "Options:"
-    echo "  --keycloak-version <version>    Specifies the Keycloak version. Defaults to version from 'pom.xml' if not provided."
-    echo "  --quarkus-version <version>     Specifies the Quarkus version. Defaults to version from 'pom.xml' if not provided."
-    echo "  --distPath <path>               Specifies the distribution path."
+    echo "  --keycloak-version <version>    Specify the Keycloak version. Defaults to version from 'pom.xml' if not provided."
+    echo "  --quarkus-version <version>     Specify the Quarkus version. Defaults to version from 'pom.xml' if not provided."
+    echo "  --distPath <path>               Specify the distribution path."
+    echo "  --container                     Specify the build is run in container. No external distribution is fetched and only necessary files are generated."
     echo "  -h, --help                      Displays this help message."
 }
 
@@ -148,6 +149,7 @@ case "$command" in
         keycloak_version=""
         quarkus_version=""
         distPath=""
+        additional_properties=""
 
         # Process parameters for `build`
         while [[ $# -gt 0 ]]; do
@@ -179,6 +181,10 @@ case "$command" in
                     fi
                     echo "Distribution path set to: $distPath"
                     ;;
+                --container)
+                    additional_properties+="-Dcontainer "
+                    echo "Building in container mode without fetching distribution externally."
+                    ;;
                 -h|--help)
                     show_help_build
                     exit 0
@@ -206,7 +212,8 @@ case "$command" in
 
         # Build logic goes here using $keycloak_version, $quarkus_version, or $distPath variables
         echo "Executing build with '--keycloak-version': $keycloak_version, '--quarkus-version': $quarkus_version, and '--distPath': ${distPath:-N/A}"
-        "$SCRIPT_DIR"/mvnw clean install -f "$SCRIPT_DIR"/pom.xml -DskipTests -Dkeycloak.version="$keycloak_version" -Dquarkus.version="$quarkus_version"
+        echo "Additional properties: $additional_properties"
+        "$SCRIPT_DIR"/mvnw clean install -f "$SCRIPT_DIR"/pom.xml -DskipTests -Dkeycloak.version="$keycloak_version" -Dquarkus.version="$quarkus_version" "$additional_properties"
         ;;
 
     list)
