@@ -15,6 +15,7 @@
 
         <keycloak.distribution.name>keycloak-${keycloak.version}</keycloak.distribution.name>
         <keycloak.distribution.path>${project.build.directory}/unpacked/${keycloak.distribution.name}</keycloak.distribution.path>
+        <keycloak.distribution.final.name>keycloak-extended-${keycloak.version}</keycloak.distribution.final.name>
 
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

@@ -100,7 +100,7 @@
                                 <descriptor>assembly.xml</descriptor>
                             </descriptors>
                             <recompressZippedFiles>true</recompressZippedFiles>
-                            <finalName>${keycloak.distribution.name}</finalName>
+                            <finalName>${keycloak.distribution.final.name}</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                             <outputDirectory>${project.build.directory}</outputDirectory>
                             <workDirectory>${project.build.directory}/assembly/work</workDirectory>
@@ -142,7 +142,7 @@
                                 <resource>
                                     <directory>${project.build.directory}</directory>
                                     <includes>
-                                        <include>${keycloak.distribution.name}.zip</include>
+                                        <include>${keycloak.distribution.final.name}.zip</include>
                                     </includes>
                                 </resource>
                             </resources>

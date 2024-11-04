@@ -221,7 +221,7 @@ case "$command" in
         fi
 
         # Find the Keycloak distribution zip file in the target directory
-        keycloak_zip=$(find "$SCRIPT_DIR"/target -maxdepth 1 -name 'keycloak*.zip' | head -n 1)
+        keycloak_zip=$(find "$SCRIPT_DIR"/target -maxdepth 1 -name 'keycloak-extended-*.zip' | head -n 1)
 
         # Check if the zip file was found
         if [ -z "$keycloak_zip" ]; then
