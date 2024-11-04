@@ -52,7 +52,3 @@ Start in dev mode:
 ```shell
 ./kc-extension.sh start-dev
 ```
-
-#### Windows support (restricted)
-
-There is only restricted support for Windows - you can use the `kc-extension.bat` script instead, but not tested.
