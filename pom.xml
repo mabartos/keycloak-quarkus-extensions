@@ -27,6 +27,7 @@
     </properties>
 
     <modules>
+        <module>cli</module>
         <module>runtime</module>
         <module>deployment</module>
         <module>resolver</module>
