@@ -8,13 +8,14 @@ show_help() {
     echo "Usage: $0 [OPTIONS] <command>"
     echo
     echo "Options:"
-    echo "  -h, --help                Display this help message."
+    echo "  -h, --help                          Display this help message."
     echo
     echo "Commands:"
-    echo "  add <extension>           Add Quarkus/Quarkiverse extension."
-    echo "  build                     Rebuild the Keycloak distribution with custom extensions."
-    echo "  list                      Display all available extensions."
-    echo "  start-dev                 Execute the generated Keycloak distribution in development mode."
+    echo "  add <extension>                     Add Quarkus/Quarkiverse extension present in the list of extensions."
+    echo "  add <groupId:artifactId:version>    Manually add Quarkiverse or your own extension to the project by specifying GAV."
+    echo "  build                               Rebuild the Keycloak distribution with custom extensions."
+    echo "  list                                Display all available extensions."
+    echo "  start-dev                           Execute the generated Keycloak distribution in development mode."
 }
 
 # Function to show help message for build command
@@ -80,27 +81,63 @@ $dependencySnippet" "$pomFile"
 }
 
 # Handle adding extension for deployment/pom.xml and for particular platform BOM
-handle_add_extension_for_platform() {
+handle_add_extension() {
     local groupId="$1"
     local artifactId="$2"
     local version="$3"
     local show_version="$4"
+    local pom_file="$5"
 
     echo "Handling extension with groupId '$groupId'."
-    deployment_artifact_id="${artifactId}-deployment"
 
-    "$SCRIPT_DIR"/mvnw dependency:get -Dartifact="${groupId}:${deployment_artifact_id}:${version}"
+    "$SCRIPT_DIR"/mvnw dependency:get -Dartifact="${groupId}:${artifactId}:${version}" -Dtransitive=false
 
     if [[ $? -eq 0 ]]; then
-        if "$SCRIPT_DIR"/mvnw -f "$SCRIPT_DIR"/deployment/pom.xml dependency:tree | grep -q "${groupId}:${deployment_artifact_id}"; then
-            echo "Deployment dependency ('$deployment_artifact_id') is already part of deployment/pom.xml. Ignoring adding."
+        if "$SCRIPT_DIR"/mvnw -f "$pom_file" dependency:tree | grep -q "${groupId}:${artifactId}"; then
+            echo "Dependency ('$artifactId') is already part of '$pom_file'. Ignoring adding."
         else
-            add_dependency "$groupId" "$deployment_artifact_id" "$version" "$SCRIPT_DIR"/deployment/pom.xml "$show_version"
-            echo "Automatically added -deployment dependency ('$deployment_artifact_id')."
+            add_dependency "$groupId" "$artifactId" "$version" "$pom_file" "$show_version"
+            echo "Automatically added dependency ('$artifactId')."
         fi
     else
-        echo "Deployment dependency '$deployment_artifact_id' does not exist (exit code $?). Please, revisit the 'deployment/pom.xml'."
+        echo "Dependency '$artifactId' does not exist (exit code $?). Please, revisit the $pom_file."
     fi
+}
+
+handle_add_extension_gav() {
+    local gav="$1"
+
+    groupId=$(echo "$gav" | cut -d: -f1)
+    artifactId=$(echo "$gav" | cut -d: -f2)
+    version=$(echo "$gav" | cut -d: -f3)
+
+    echo "Adding extension from GAV: $groupId:$artifactId:$version"
+
+    handle_add_extension "$groupId" "$artifactId" "$version" true "$SCRIPT_DIR/runtime/pom.xml"
+    handle_add_extension "$groupId" "${artifactId}-deployment" "$version" true "$SCRIPT_DIR/deployment/pom.xml"
+}
+
+handle_add_extension_name() {
+    local artifactId="$1"
+    output=$("$SCRIPT_DIR"/mvnw -f "$SCRIPT_DIR"/runtime/pom.xml quarkus:list-extensions -Dformat=origins | grep -w "$artifactId" | head -n 1)
+
+    extension_name=$(echo "$output" | awk '{print ($2 == "✬" ? $3 : $2)}')
+    version=$(echo "$output" | awk '{print $(NF-1)}')
+    bom_info=$(echo "$output" | awk '{print $NF}')
+
+    echo "Extension Name: $extension_name"
+    echo "ArtifactId: $artifactId"
+    echo "Version: $version"
+    echo "BOM Info: $bom_info"
+
+    if [[ $bom_info == io.quarkus.platform:quarkus-bom:* ]]; then
+        handle_add_extension io.quarkus "${artifactId}-deployment" "$version" false "$SCRIPT_DIR/deployment/pom.xml"
+    else
+        echo "Error: Cannot find the extension. Specify it as GAV (groupId:artifactId:version)"
+        exit 1
+    fi
+
+    "$SCRIPT_DIR"/mvnw -f "$SCRIPT_DIR"/runtime/pom.xml quarkus:add-extension -Dextension="$artifactId"
 }
 
 # Store the subcommand and shift it out of the argument list
@@ -112,36 +149,21 @@ case "$command" in
     add)
         # Check if additional arguments were provided
         if [ $# -eq 0 ]; then
-            echo "Error: No extension name provided."
+            echo "Error: No extension name or GAV provided."
             exit 1
         elif [ $# -gt 1 ]; then
             echo "Error: You can specify only one extension at a time."
             exit 1
         fi
-        artifactId="$1"
+        input="$1"
 
-        output=$("$SCRIPT_DIR"/mvnw -f "$SCRIPT_DIR"/runtime/pom.xml quarkus:list-extensions -Dformat=origins | grep -w "$artifactId" | head -n 1)
-
-        # Extract extension name, version, and BOM info
-        extension_name=$(echo "$output" | awk '{print ($2 == "✬" ? $3 : $2)}')
-        version=$(echo "$output" | awk '{print $(NF-1)}')
-        bom_info=$(echo "$output" | awk '{print $NF}')
-
-        echo "Extension Name: $extension_name"
-        echo "ArtifactId: $artifactId"
-        echo "Version: $version"
-        echo "BOM Info: $bom_info"
-
-        if [[ $bom_info == io.quarkus.platform:quarkus-bom:* ]]; then
-            echo "BOM info starts with 'io.quarkus.platform:quarkus-bom:'."
-            handle_add_extension_for_platform io.quarkus "$artifactId" "$version" false
+        if [[ "$input" == *:*:* ]]; then
+          # GAV
+          handle_add_extension_gav "$input"
         else
-            echo "-------------------------------------------------------------------------------------------------------------------------------------------------------------"
-            echo "WARNING: Do not forget to add the same extension present in runtime/pom.xml to the deployment/pom.xml with the suffix '-deployment' in artifactId (if exists)"
-            echo "-------------------------------------------------------------------------------------------------------------------------------------------------------------"
+          # Extension name
+          handle_add_extension_name "$input"
         fi
-
-        "$SCRIPT_DIR"/mvnw -f "$SCRIPT_DIR"/runtime/pom.xml quarkus:add-extension -Dextension="$artifactId"
         ;;
 
     build)
