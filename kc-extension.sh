@@ -103,9 +103,8 @@ case "$command" in
         "$SCRIPT_DIR"/scripts/command-build.sh "$@"
         ;;
     list)
-        "$SCRIPT_DIR"/mvnw -f "$SCRIPT_DIR"/runtime/pom.xml quarkus:list-extensions
+        "$SCRIPT_DIR"/scripts/command-list.sh "$@"
         ;;
-
     start-dev)
         # Find the Keycloak distribution zip file in the target directory
         keycloak_zip=$(find "$SCRIPT_DIR" -maxdepth 1 -name 'keycloak-extended-*.zip' | head -n 1)
