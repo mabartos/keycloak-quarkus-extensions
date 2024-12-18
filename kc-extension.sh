@@ -27,8 +27,6 @@ show_help_build() {
     echo "Options:"
     echo "  --keycloak-version <version>    Specify the Keycloak version. Defaults to version from 'pom.xml' if not provided."
     echo "  --quarkus-version <version>     Specify the Quarkus version. Defaults to version from 'pom.xml' if not provided."
-    echo "  --distPath <path>               Specify the distribution path."
-    echo "  --container                     Specify the build is run in container. No external distribution is fetched and only necessary files are generated."
     echo "  -h, --help                      Displays this help message."
 }
 
@@ -194,19 +192,6 @@ case "$command" in
                     fi
                     echo "Quarkus version set to: $quarkus_version"
                     ;;
-                --distPath*)
-                    # Extract value from option
-                    distPath="${1#*=}"
-                    if [[ -z "$distPath" || "$distPath" == "$1" ]]; then
-                        echo "Error: Missing value for --distPath."
-                        exit 1
-                    fi
-                    echo "Distribution path set to: $distPath"
-                    ;;
-                --container)
-                    additional_properties+="-Dcontainer "
-                    echo "Building in container mode without fetching distribution externally."
-                    ;;
                 -h|--help)
                     show_help_build
                     exit 0
@@ -261,11 +246,6 @@ case "$command" in
         # Change to the directory of the unzipped distribution
         keycloak_dir=$(basename "$keycloak_zip" .zip)
         cd "$SCRIPT_DIR/target/$keycloak_dir" || exit
-
-        if [ ! -d "bin/" ]; then
-            echo "Error: You probably built distribution with --container flag. Please rebuild it again without it."
-            exit 1
-        fi
 
         echo "Starting Keycloak in development mode..."
 
