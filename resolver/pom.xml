@@ -80,6 +80,7 @@
                             <appendAssemblyId>false</appendAssemblyId>
                             <outputDirectory>${project.build.directory}</outputDirectory>
                             <workDirectory>${project.build.directory}/assembly/work</workDirectory>
+                            <tarLongFileMode>posix</tarLongFileMode>
                         </configuration>
                     </execution>
                 </executions>
@@ -107,7 +108,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>copy-distribution-zip</id>
+                        <id>copy-distribution</id>
                         <phase>install</phase>
                         <goals>
                             <goal>copy-resources</goal>
@@ -119,6 +120,7 @@
                                     <directory>${project.build.directory}</directory>
                                     <includes>
                                         <include>${keycloak.distribution.final.name}.zip</include>
+                                        <include>${keycloak.distribution.final.name}.tar.gz</include>
                                     </includes>
                                 </resource>
                             </resources>
