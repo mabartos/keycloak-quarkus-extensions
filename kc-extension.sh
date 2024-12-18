@@ -17,77 +17,7 @@ show_help() {
     echo "  build                               Rebuild the Keycloak distribution with custom extensions."
     echo "  list                                Display all available extensions."
     echo "  start-dev                           Execute the generated Keycloak distribution in development mode."
-}
-
-show_help_image() {
-    echo "Build enhanced Keycloak builder image with your custom extensions"
-    echo
-    echo "Usage: $0 image [OPTIONS]"
-    echo
-    echo "Options:"
-    echo "  --use-docker                   Use Docker instead of Podman. Default is Podman."
-    echo "  --keycloak-version <version>   Specify the Keycloak version to use. Defaults to the version from 'pom.xml'."
-    echo "  --name <name>                  Specify the image name. Defaults to 'keycloak-extended-{keycloak.version}'."
-    echo "  -h, --help                     Displays this help message."
-}
-
-handle_image_command() {
-    local use_docker=false
-    local version=""
-    local name=""
-
-    while [[ $# -gt 0 ]]; do
-        case "$1" in
-            --use-docker)
-                use_docker=true
-                ;;
-            --version)
-                version="$2"
-                shift
-                ;;
-            --name)
-                name="$2"
-                shift
-                ;;
-            -h|--help)
-                show_help_image
-                exit 0
-                ;;
-            *)
-                echo "Unknown option: $1"
-                echo "Type '$0 container --help' for available options."
-                exit 1
-                ;;
-        esac
-        shift
-    done
-
-    # Get keycloak.version from pom.xml if not provided
-    if [[ -z "$version" ]]; then
-        version=$(get_keycloak_version_from_pom)
-        echo "Using version from pom.xml: $version"
-    fi
-
-    # Set default image name if not provided
-    if [[ -z "$name" ]]; then
-        name="keycloak-extended-${keycloak_version}"
-        echo "Using default image name: $name"
-    fi
-
-    if [ ! -f "$SCRIPT_DIR/keycloak-extended-$version.tar.gz" ]; then
-        echo "Error: No extended Keycloak distribution (keycloak-extended-$version.tar.gz) found in root directory. Did you execute 'build' command?"
-    fi
-
-    # Determine the container engine
-    local container_engine="podman"
-    if [[ "$use_docker" == true ]]; then
-        container_engine="docker"
-    fi
-
-    echo "Building Keycloak container image with $container_engine..."
-
-    # Execute the container build command
-    $container_engine build -t "$name" --build-arg=KEYCLOAK_DIST=keycloak-extended-"$version".tar.gz -f https://raw.githubusercontent.com/keycloak/keycloak/"$version"/quarkus/container/Dockerfile "$SCRIPT_DIR"
+    echo "  image                               Build extended Keycloak builder image with your custom extensions."
 }
 
 # Store the subcommand and shift it out of the argument list
@@ -109,13 +39,11 @@ case "$command" in
         "$SCRIPT_DIR"/scripts/command-start-dev.sh "$@"
         ;;
     image)
-        handle_image_command "$@"
+        "$SCRIPT_DIR"/scripts/command-image.sh "$@"
         ;;
-
     -h|--help)
         show_help
         ;;
-
     *)
         echo "Unknown command: $command"
         echo "Type '$0 --help' for available commands."
