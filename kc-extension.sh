@@ -106,28 +106,7 @@ case "$command" in
         "$SCRIPT_DIR"/scripts/command-list.sh "$@"
         ;;
     start-dev)
-        # Find the Keycloak distribution zip file in the target directory
-        keycloak_zip=$(find "$SCRIPT_DIR" -maxdepth 1 -name 'keycloak-extended-*.zip' | head -n 1)
-
-        # Check if the zip file was found
-        if [ -z "$keycloak_zip" ]; then
-            echo "Error: No Keycloak distribution zip file found in target directory."
-            exit 1
-        fi
-
-        rm -rf "$SCRIPT_DIR"/target/
-
-        # Unzip the distribution
-        echo "Unzipping Keycloak distribution from: $keycloak_zip"
-        unzip -q "$keycloak_zip" -d "$SCRIPT_DIR"/target/
-
-        # Change to the directory of the unzipped distribution
-        keycloak_dir=$(basename "$keycloak_zip" .zip)
-        cd "$SCRIPT_DIR/target/$keycloak_dir" || exit
-
-        echo "Starting Keycloak in development mode..."
-
-        ./bin/kc.sh start-dev
+        "$SCRIPT_DIR"/scripts/command-start-dev.sh "$@"
         ;;
     image)
         handle_image_command "$@"
