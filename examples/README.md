@@ -4,19 +4,27 @@ In this folder, you can find some examples on how to use this tool to achieve re
 
 If you would like to be interested in an example for a specific Quarkus/Quarkiverse extension, [create an issue](https://github.com/mabartos/keycloak-quarkus-extensions/issues/new) for it.
 
-## [Logging GELF](logging-gelf.md)
+## Configuration
+
+### [Advanced configuration](advanced-configuration.md)
+
+You can achieve much more with the configuration of the tool.
+
+## Extensions
+
+### [Logging GELF](logging-gelf.md)
 
 **Extension:**  `quarkus-logging-gelf`
 
 An example on how to use Graylog and GELF for centralized log management.
 
-## [Logging JSON (ECS)](logging-json-ecs.md)
+### [Logging JSON (ECS)](logging-json-ecs.md)
 
 **Extension:**  `quarkus-logging-json`
 
 Quarkus logging extension outputting the logging in JSON with the support of ECS (Elastic Common Schema).
 
-## [LangChain4j](langchain4j.md)
+### [LangChain4j](langchain4j.md)
 
 **Extension:**  `quarkus-langchain4j-*`
 

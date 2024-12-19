@@ -136,4 +136,4 @@ You should see the extended Keycloak accessible at `localhost:8080`.
 
 ## Examples
 
-For more examples how to add Quarkus/Quarkiverse extensions, see the [examples](examples) directory.
+For more examples how to configure the tool or add Quarkus/Quarkiverse extensions, see the [examples](examples) directory.
