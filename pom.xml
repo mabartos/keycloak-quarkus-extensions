@@ -27,7 +27,6 @@
     </properties>
 
     <modules>
-        <module>cli</module>
         <module>runtime</module>
         <module>deployment</module>
         <module>resolver</module>
@@ -71,5 +70,19 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+        <profile>
+            <id>cli-new</id>
+            <activation>
+                <property>
+                    <name>cli-new</name>
+                </property>
+            </activation>
+            <modules>
+                <module>cli</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>
