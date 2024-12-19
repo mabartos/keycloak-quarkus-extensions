@@ -33,7 +33,6 @@
             <excludes>
                 <exclude>lib/</exclude>
                 <exclude>conf/keycloak.conf</exclude>
-                <exclude>conf/application.properties</exclude>
             </excludes>
         </fileSet>
 
@@ -41,7 +40,7 @@
             <directory>../</directory>
             <outputDirectory>conf/</outputDirectory>
             <includes>
-                <include>application.properties</include>
+                <include>quarkus.properties</include>
             </includes>
         </fileSet>
 
