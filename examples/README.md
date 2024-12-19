@@ -15,3 +15,9 @@ An example on how to use Graylog and GELF for centralized log management.
 **Extension:**  `quarkus-logging-json`
 
 Quarkus logging extension outputting the logging in JSON with the support of ECS (Elastic Common Schema).
+
+## [LangChain4j](langchain4j.md)
+
+**Extension:**  `quarkus-langchain4j-*`
+
+You can have a seamless integration of LLMs in your Keycloak extensions.
