@@ -7,7 +7,7 @@ source "$ROOT_DIR/scripts/utils.sh"
 show_help_start_dev() {
     echo "Execute the generated Keycloak distribution in development mode."
     echo
-    echo "Usage: ./kc-extensions.sh start-dev [OPTIONS]"
+    echo "Usage: ./kc-extension.sh start-dev [OPTIONS]"
     echo
     echo "Options:"
     echo "  --version <version>             Specify the version of generated extended Keycloak distribution. Defaults to Keycloak version from 'pom.xml' if not provided."
@@ -34,7 +34,7 @@ handle_command_start_dev() {
             ;;
         *)
             echo "Unknown option: $1"
-            echo "Type ./kc-extensions.sh start-dev --help' for available options."
+            echo "Type ./kc-extension.sh start-dev --help' for available options."
             exit 1
             ;;
         esac

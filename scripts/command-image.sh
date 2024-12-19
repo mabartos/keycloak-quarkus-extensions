@@ -7,7 +7,7 @@ source "$ROOT_DIR/scripts/utils.sh"
 show_help_image() {
     echo "Build extended Keycloak builder image with your custom extensions"
     echo
-    echo "Usage: ./kc-extensions.sh image [OPTIONS]"
+    echo "Usage: ./kc-extension.sh image [OPTIONS]"
     echo
     echo "Options:"
     echo "  --use-docker                   Use Docker instead of Podman. Default is Podman."
@@ -40,7 +40,7 @@ handle_command_image() {
             ;;
         *)
             echo "Unknown option: $1"
-            echo "Type './kc-extensions.sh image --help' for available options."
+            echo "Type './kc-extension.sh image --help' for available options."
             exit 1
             ;;
         esac

@@ -6,7 +6,7 @@ source "$SCRIPT_DIR/scripts/utils.sh"
 show_help() {
     echo "Add Quarkus/Quarkiverse extensions to your Keycloak deployment"
     echo
-    echo "Usage: ./kc-extensions.sh [OPTIONS] <command>"
+    echo "Usage: ./kc-extension.sh [OPTIONS] <command>"
     echo
     echo "Options:"
     echo "  -h, --help                          Display this help message."
@@ -46,7 +46,7 @@ case "$command" in
         ;;
     *)
         echo "Unknown command: $command"
-        echo "Type './kc-extensions.sh --help' for available commands."
+        echo "Type './kc-extension.sh --help' for available commands."
         exit 1
         ;;
 esac

@@ -7,7 +7,7 @@ source "$ROOT_DIR/scripts/utils.sh"
 show_help_build() {
     echo "Build Keycloak distribution with provided Quarkus/Quarkiverse extensions"
     echo
-    echo "Usage: ./kc-extensions.sh build [OPTIONS]"
+    echo "Usage: ./kc-extension.sh build [OPTIONS]"
     echo
     echo "Options:"
     echo "  --keycloak-version <version>    Specify the Keycloak version. Defaults to version from 'pom.xml' if not provided."
@@ -48,7 +48,7 @@ handle_command_build() {
             ;;
         *)
             echo "Unknown build option: $1"
-            echo "Type './kc-extensions.sh build --help' for available build options."
+            echo "Type './kc-extension.sh build --help' for available build options."
             exit 1
             ;;
         esac

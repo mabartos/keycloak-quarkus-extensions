@@ -11,7 +11,8 @@ Options:
   -h, --help                Display this help message.
 
 Commands:
-  add <extension>           Add Quarkus/Quarkiverse extension.
+  add    <extension>        Add Quarkus/Quarkiverse extension.
+  add    <GAV>              Manually add Quarkiverse or your own extension to the project by specifying <groupId:artifactId:version>.
   build                     Rebuild the Keycloak distribution with custom extensions.
   list                      Display all available extensions.
   start-dev                 Execute the generated Keycloak distribution in development mode.
