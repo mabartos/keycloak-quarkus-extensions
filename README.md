@@ -133,3 +133,7 @@ start --hostname-strict=false --http-enabled=true --optimized
 You should see the extended Keycloak accessible at `localhost:8080`.
 
 **INFO**: Use `docker` if you don't use `podman`.
+
+## Examples
+
+For more examples how to add Quarkus/Quarkiverse extensions, see the [examples](examples) directory.
