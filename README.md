@@ -1,4 +1,4 @@
-![Keycloak-extended](docs/img/keycloak-extensions-logo-long.png)
+![Keycloak-extended](logo.png)
 
 # Keycloak Quarkus extensions
 
