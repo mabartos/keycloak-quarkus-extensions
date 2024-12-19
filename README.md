@@ -26,6 +26,8 @@ Commands:
   image                     Build extended Keycloak builder image with your custom extensions.
 ```
 
+For more advanced use-cases, see the [Configuration guides](examples/README.md#configuration).
+
 ## Your first extended Keycloak
 
 How to add your first extensions to your Keycloak deployment? Follow this simple guidelines:
