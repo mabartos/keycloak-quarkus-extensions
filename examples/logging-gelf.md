@@ -1,4 +1,4 @@
-# Quarkus GELF extension
+# Quarkus Logging GELF
 
 **Quarkus extension**: `quarkus-logging-gelf`
 
