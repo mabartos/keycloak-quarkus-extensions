@@ -55,7 +55,12 @@ handle_command_image() {
 
     # Set default image name if not provided
     if [[ -z "$name" ]]; then
-        name="keycloak-extended-${version}"
+        local name_version=""
+        if [[ "$version" == "999.0.0-SNAPSHOT" ]]; then
+            name_version="999.0.0"
+        fi
+
+        name="keycloak-extended"
         echo "Using default image name: $name"
     fi
 
@@ -69,10 +74,15 @@ handle_command_image() {
         container_engine="docker"
     fi
 
-    echo "Building Keycloak container image with $container_engine..."
+    local image_version="$version"
+    if [[ "$version" == "999.0.0-SNAPSHOT" ]]; then
+        image_version="nightly"
+    fi
+
+    echo "Building extended Keycloak container image with $container_engine..."
 
     # Execute the container build command
-    $container_engine build -t "$name" --build-arg=KEYCLOAK_DIST=keycloak-extended-"$version".tar.gz -f https://raw.githubusercontent.com/keycloak/keycloak/"$version"/quarkus/container/Dockerfile "$ROOT_DIR"
+    $container_engine build -t "$name":"$image_version" --build-arg=KEYCLOAK_DIST=keycloak-extended-"$version".tar.gz -f https://raw.githubusercontent.com/keycloak/keycloak/"$image_version"/quarkus/container/Dockerfile "$ROOT_DIR"
 
 }
 
