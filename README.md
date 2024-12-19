@@ -46,7 +46,7 @@ How to add your first extensions to your Keycloak deployment? Follow this simple
 ./kc-extension.sh start-dev
 ```
 
-Now, you should be able to access extended Keycloak instance at `localhost:8080`.
+Now, you should be able to access extended nightly Keycloak instance at `localhost:8080`.
 
 The `build` command generates extended Keycloak distribution as files:
 
