@@ -20,17 +20,6 @@
         <!-- Add your runtime Quarkus/Quarkiverse extensions HERE -->
         <!-- BEGIN -->
 
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-logging-gelf</artifactId>
-            <version>${quarkus.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkiverse.langchain4j</groupId>
-            <artifactId>quarkus-langchain4j-openai</artifactId>
-            <version>0.20.3</version>
-        </dependency>
-
         <!-- END -->
     </dependencies>
 
