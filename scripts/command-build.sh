@@ -4,7 +4,6 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
 source "$ROOT_DIR/scripts/utils.sh"
 
-# Function to show help message for build command
 show_help_build() {
     echo "Build Keycloak distribution with provided Quarkus/Quarkiverse extensions"
     echo
@@ -20,7 +19,6 @@ handle_command_build() {
     # Initialize variables
     keycloak_version=""
     quarkus_version=""
-    distPath=""
     additional_properties=""
 
     # Process parameters for `build`
@@ -69,8 +67,8 @@ handle_command_build() {
         echo "Using quarkus version from pom.xml: $quarkus_version"
     fi
 
-    # Build logic goes here using $keycloak_version, $quarkus_version, or $distPath variables
-    echo "Executing build with '--keycloak-version': $keycloak_version, '--quarkus-version': $quarkus_version, and '--distPath': ${distPath:-N/A}"
+    # Build logic goes here using $keycloak_version, and $quarkus_version variables
+    echo "Executing build with '--keycloak-version': $keycloak_version, and '--quarkus-version': $quarkus_version"
     echo "Additional properties: $additional_properties"
     "$ROOT_DIR"/mvnw clean install -f "$ROOT_DIR"/pom.xml -DskipTests -Dkeycloak.version="$keycloak_version" -Dquarkus.version="$quarkus_version" $additional_properties
 }
