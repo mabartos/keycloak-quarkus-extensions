@@ -1,3 +1,5 @@
+![Keycloak-extended](docs/img/keycloak-extensions-logo-long.png)
+
 # Keycloak Quarkus extensions
 
 **Easily add Quarkus/Quarkiverse extension to your Keycloak distribution.**
