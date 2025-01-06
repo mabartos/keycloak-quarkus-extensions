@@ -7,12 +7,10 @@
 The principle is quite basic as it mimics the process of building Keycloak distribution for the main Keycloak.
 It will just include all Quarkus/Quarkiverse extensions in the distribution.
 
-**INFO**: Work is still in a progress and code MAY change!
-
 ```shell
 Add Quarkus/Quarkiverse extensions to your Keycloak deployment
 
-Usage: ./kc-extension.sh [OPTIONS] <command>
+Usage: ./kc-extension.sh <command>
 
 Options:
   -h, --help                Display this help message.
