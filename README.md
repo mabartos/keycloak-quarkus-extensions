@@ -1,4 +1,7 @@
 ![Keycloak-extended](logo.png)
+![GitHub Release](https://img.shields.io/github/v/release/mabartos/keycloak-quarkus-extensions)
+![GitHub Release](https://img.shields.io/github/v/release/keycloak/keycloak.svg?logo=keycloak&label=supports%20Keycloak)
+![GitHub Release](https://img.shields.io/github/v/release/keycloak/keycloak.svg?logo=keycloak&label=supports%20Keycloak&include_prereleases)
 
 # Keycloak Quarkus Extensions
 
