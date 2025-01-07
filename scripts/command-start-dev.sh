@@ -7,15 +7,19 @@ source "$ROOT_DIR/scripts/utils.sh"
 show_help_start_dev() {
     echo "Execute the generated Keycloak distribution in development mode."
     echo
-    echo "Usage: ./kc-extension.sh start-dev [OPTIONS]"
+    echo "Usage: ./kc-extension.sh start-dev [OPTIONS] [ARGUMENTS]"
     echo
     echo "Options:"
     echo "  --version <version>             Specify the version of generated extended Keycloak distribution. Defaults to Keycloak version from 'pom.xml' if not provided."
     echo "  -h, --help                      Displays this help message."
+    echo
+    echo "Arguments:"
+    echo "  Any other arguments will be passed directly to the 'kc.sh start-dev' command."
 }
 
 handle_command_start_dev() {
     version=""
+    additional_args=()
 
     while [[ $# -gt 0 ]]; do
         case "$1" in
@@ -31,6 +35,9 @@ handle_command_start_dev() {
         -h | --help)
             show_help_start_dev
             exit 0
+            ;;
+        --*)
+            additional_args+=("$1")
             ;;
         *)
             echo "Unknown option: $1"
@@ -52,7 +59,8 @@ handle_command_start_dev() {
     # Check whether zip exists
     if [ ! -f "$keycloak_zip" ]; then
         echo "Error: No Keycloak distribution zip file found in target directory. ("$keycloak_zip")"
-        exit 1;
+        echo "Did you execute the './kc-extension.sh build' command before?"
+        exit 1
     fi
 
     rm -rf "$ROOT_DIR"/target/
@@ -67,7 +75,7 @@ handle_command_start_dev() {
 
     echo "Starting Keycloak in development mode..."
 
-    ./bin/kc.sh start-dev
+    ./bin/kc.sh start-dev "${additional_args[@]}"
 }
 
 handle_command_start_dev "$@"
