@@ -22,7 +22,7 @@ For more information, check the [Quarkiverse OTel Exporter guide](https://docs.q
 2. Add Quarkus properties in root `quarkus.properties` to disable the default exporter and enable the GCP:
 
 ```properties
-quarkus.opentelemetry.tracer.exporter.otlp.enabled=false
+quarkus.otel.exporter.otlp.enabled=false
 quarkus.opentelemetry.tracer.exporter.gcp.enabled=true
 ```
 
