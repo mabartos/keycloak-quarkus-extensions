@@ -56,7 +56,10 @@ The `build` command generates extended Keycloak distribution as files:
 * `keycloak-extended-999.0.0-SNAPSHOT.tar.gz`
 * `keycloak-extended-999.0.0-SNAPSHOT.zip`
 
-For more options how to build the distribution, check the [Advanced configuration](examples/advanced-configuration.md) guide or execute `./kc-extensions.sh build --help`.
+For more options how to build the distribution, check the [Advanced configuration](examples/advanced-configuration.md) guide or execute:
+```shell
+./kc-extension.sh build --help
+```
 
 ## Container
 
