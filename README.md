@@ -53,11 +53,10 @@ Now, you should be able to access extended nightly Keycloak instance at `localho
 
 The `build` command generates extended Keycloak distribution as files:
 
-* `keycloak-extended-{version}.tar.gz`
-* `keycloak-extended-{version}.zip`
+* `keycloak-extended-999.0.0-SNAPSHOT.tar.gz`
+* `keycloak-extended-999.0.0-SNAPSHOT.zip`
 
-Where the `version` represents the specific version of Keycloak.
-For more options how to build the distribution, execute `./kc-extensions.sh build --help`.
+For more options how to build the distribution, check the [Advanced configuration](examples/advanced-configuration.md) guide or execute `./kc-extensions.sh build --help`.
 
 ## Container
 
@@ -66,4 +65,4 @@ Follow instructions in the [Container](docs/container.md) guide.
 
 ## Examples
 
-For more examples how to configure the tool or add Quarkus/Quarkiverse extensions, see the [examples](examples) directory.
+For more examples how to configure the tool or add Quarkus/Quarkiverse extensions, see the [Examples](examples/README.md).
