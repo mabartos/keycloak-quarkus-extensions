@@ -29,3 +29,9 @@ Quarkus logging extension outputting the logging in JSON with the support of ECS
 **Extension:**  `quarkus-langchain4j-*`
 
 You can have a seamless integration of LLMs in your Keycloak extensions.
+
+### [OpenTelemetry Exporter for GCP](otel-gcp-exporter.md)
+
+**Extension:**  `quarkus-opentelemetry-exporter-gcp*`
+
+Quarkiverse extension for using OpenTelemetry GCP Exporter to send data to Google Cloud Platform. 
