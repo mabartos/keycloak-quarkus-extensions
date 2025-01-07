@@ -34,7 +34,7 @@ quarkus.log.json.log-format=ecs
 ./kc-extension.sh start-dev
 ```
 
-### Container support
+## Container support
 
 The generated distribution should be available in the root directory with prefix `keycloak-extended-*.tar.gz`.
 

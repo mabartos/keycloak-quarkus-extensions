@@ -1,4 +1,4 @@
-## Container Support
+# Container Support
 
 Do you want to use extended Keycloak as a container image?
 We provide command `image` that builds image, which purpose is to be a `builder` image in your Containerfile/Dockerfile
@@ -7,7 +7,7 @@ in [Writing your optimized Keycloak Containerfile](https://www.keycloak.org/serv
 
 For more options, execute `./kc-extension.sh image --help`.
 
-### Create a builder image
+## Create a builder image
 
 To create the builder image, execute:
 
@@ -27,7 +27,7 @@ FROM localhost/keycloak-extended:nightly AS builder
 
 **INFO**: You can push the image to more available sources
 
-### Create an optimized enhanced image
+## Create an optimized enhanced image
 
 As mentioned in the
 guide [Writing your optimized Keycloak Containerfile](https://www.keycloak.org/server/containers#_writing_your_optimized_keycloak_containerfile),
@@ -60,7 +60,7 @@ The optimized image can be created as follows:
 podman build --tag my-extended-keycloak -f examples/Containerfile-example .
 ```
 
-### Start the optimized image
+## Start the optimized image
 
 We have created the optimized image and we can start it as mentioned in the [Container](https://www.keycloak.org/getting-started/getting-started-podman) guide, and as follows:
 

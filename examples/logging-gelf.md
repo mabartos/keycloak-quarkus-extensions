@@ -37,7 +37,7 @@ quarkus.log.handler.gelf.port=12201
 ./kc-extension.sh start-dev
 ```
 
-### Container support
+## Container support
 
 The generated distribution should be available in the root directory with prefix `keycloak-extended-*.tar.gz`.
 

@@ -38,7 +38,7 @@ quarkus.opentelemetry.tracer.exporter.gcp.enabled=true
 ./kc-extension.sh start-dev --tracing-enabled=true
 ```
 
-### Container support
+## Container support
 
 The generated distribution should be available in the root directory with prefix `keycloak-extended-*.tar.gz`.
 
