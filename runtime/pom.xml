@@ -41,9 +41,6 @@
                         <phase>compile</phase>
                         <configuration>
                             <deployment>${project.groupId}:${project.parent.artifactId}-deployment:${project.version}</deployment>
-                            <capabilities>
-                                <provides>io.quarkus.logging.gelf</provides>
-                            </capabilities>
                         </configuration>
                     </execution>
                 </executions>
