@@ -13,25 +13,21 @@ You can achieve much more with the configuration of the tool.
 ## Extensions
 
 ### [Logging GELF](logging-gelf.md)
-
-**Extension:**  `quarkus-logging-gelf`
+![GELF](https://img.shields.io/badge/Extension-quarkus--logging--gelf-blue?style=for-the-badge)
 
 An example on how to use Graylog and GELF for centralized log management.
 
 ### [Logging JSON (ECS)](logging-json-ecs.md)
-
-**Extension:**  `quarkus-logging-json`
+![ECS](https://img.shields.io/badge/Extension-quarkus--logging--json-blue?style=for-the-badge)
 
 Quarkus logging extension outputting the logging in JSON with the support of ECS (Elastic Common Schema).
 
 ### [LangChain4j](langchain4j.md)
-
-**Extension:**  `quarkus-langchain4j-*`
+![Langchain4j](https://img.shields.io/badge/Extension-quarkus--langchain4j--*-blue?style=for-the-badge)
 
 You can have a seamless integration of LLMs in your Keycloak extensions.
 
 ### [OpenTelemetry Exporter for GCP](otel-gcp-exporter.md)
-
-**Extension:**  `quarkus-opentelemetry-exporter-gcp*`
+![ECS](https://img.shields.io/badge/Extension-quarkus--opentelemetry--exporter--gcp-blue?style=for-the-badge)
 
 Quarkiverse extension for using OpenTelemetry GCP Exporter to send data to Google Cloud Platform. 
