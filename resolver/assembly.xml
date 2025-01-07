@@ -32,7 +32,6 @@
             </includes>
             <excludes>
                 <exclude>lib/</exclude>
-                <exclude>conf/keycloak.conf</exclude>
             </excludes>
         </fileSet>
 
