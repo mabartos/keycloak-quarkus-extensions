@@ -34,6 +34,7 @@
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-quarkus-extensions-deployment</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
