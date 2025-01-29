@@ -1,5 +1,6 @@
 ![Keycloak-extended](logo.png)
 ![GitHub Release](https://img.shields.io/github/v/release/mabartos/keycloak-quarkus-extensions)
+![CI Status](https://github.com/mabartos/keycloak-quarkus-extensions/actions/workflows/main.yml/badge.svg)
 
 # Keycloak Quarkus Extensions
 
