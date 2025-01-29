@@ -1,7 +1,5 @@
 ![Keycloak-extended](logo.png)
 ![GitHub Release](https://img.shields.io/github/v/release/mabartos/keycloak-quarkus-extensions)
-![GitHub Release](https://img.shields.io/github/v/release/keycloak/keycloak.svg?logo=keycloak&label=supports%20Keycloak)
-![GitHub Release](https://img.shields.io/github/v/release/keycloak/keycloak.svg?logo=keycloak&label=supports%20Keycloak&include_prereleases)
 
 # Keycloak Quarkus Extensions
 
@@ -53,8 +51,8 @@ Now, you should be able to access extended nightly Keycloak instance at `localho
 
 The `build` command generates extended Keycloak distribution as files:
 
-* `keycloak-extended-999.0.0-SNAPSHOT.tar.gz`
-* `keycloak-extended-999.0.0-SNAPSHOT.zip`
+* `keycloak-extended-26.1.0.tar.gz`
+* `keycloak-extended-26.1.0.zip`
 
 For more options how to build the distribution, check the [Advanced configuration](examples/advanced-configuration.md) guide or execute:
 ```shell
