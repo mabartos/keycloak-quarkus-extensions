@@ -13,8 +13,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          path: keycloak
 
       - name: Run Keycloak Extensions Build
+        working-directory: keycloak
         run: |
           set -e
           ./kc-extensions.sh build
