@@ -4,6 +4,7 @@ on:
   pull_request:
   schedule:
     - cron: "0 2 * * *"  # Runs every night at 2 AM UTC
+  workflow_dispatch:
 
 jobs:
   build:
