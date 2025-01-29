@@ -1,0 +1,19 @@
+name: Keycloak Extensions Build
+
+on:
+  pull_request:
+  schedule:
+    - cron: "0 2 * * *"  # Runs every night at 2 AM UTC
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Keycloak Extensions Build
+        run: |
+          set -e
+          ./kc-extensions.sh build
