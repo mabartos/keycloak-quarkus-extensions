@@ -20,4 +20,4 @@ jobs:
         working-directory: keycloak
         run: |
           set -e
-          ./kc-extensions.sh build
+          ./kc-extension.sh build
