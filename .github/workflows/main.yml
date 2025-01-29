@@ -16,6 +16,14 @@ jobs:
         with:
           path: keycloak
 
+      - name: Cache Maven Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            maven-${{ runner.os }}-    
+
       - name: Run Keycloak Extensions Build
         working-directory: keycloak
         run: |
