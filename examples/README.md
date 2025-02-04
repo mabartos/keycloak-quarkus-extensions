@@ -20,6 +20,8 @@ An example on how to use Graylog and GELF for centralized log management.
 ### [Logging JSON (ECS)](logging-json-ecs.md)
 ![ECS](https://img.shields.io/badge/Extension-quarkus--logging--json-blue?style=for-the-badge)
 
+**NOTE**: The ECS support will be built-in in Keycloak 26.2.x release.
+
 Quarkus logging extension outputting the logging in JSON with the support of ECS (Elastic Common Schema).
 
 ### [LangChain4j](langchain4j.md)

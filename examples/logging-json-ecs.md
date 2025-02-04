@@ -4,6 +4,8 @@
 
 **Quarkiverse extension?**: Yes
 
+**NOTE**: The ECS support will be built-in in Keycloak 26.2.x release.
+
 Quarkus logging extension outputting the logging in JSON with the support of ECS (Elastic Common Schema).
 
 For more information, check the [Quarkus Logging Json](https://github.com/quarkiverse/quarkus-logging-json) repository.
