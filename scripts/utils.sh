@@ -9,7 +9,7 @@ get_keycloak_version_from_pom() {
     version=$("$ROOT_DIR"/mvnw -f "$ROOT_DIR"/pom.xml help:evaluate -Dexpression=keycloak.version -q -DforceStdout)
     # Check if version was found
     if [[ -z "$version" ]]; then
-        echo "Error: No keycloak.version found in pom.xml."
+        echo "Error: No keycloak.version found in pom.xml." >&2
         exit 1
     fi
     echo "$version"
@@ -21,7 +21,7 @@ get_quarkus_version_from_pom() {
     version=$("$ROOT_DIR"/mvnw -f "$ROOT_DIR"/pom.xml help:evaluate -Dexpression=quarkus.version -q -DforceStdout)
     # Check if version was found
     if [[ -z "$version" ]]; then
-        echo "Error: No quarkus.version found in pom.xml."
+        echo "Error: No quarkus.version found in pom.xml." >&2
         exit 1
     fi
     echo "$version"

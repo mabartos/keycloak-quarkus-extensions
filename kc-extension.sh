@@ -45,7 +45,7 @@ case "$command" in
         show_help
         ;;
     *)
-        echo "Unknown command: $command"
+        echo "Unknown command: $command" >&2
         echo "Type './kc-extension.sh --help' for available commands."
         exit 1
         ;;

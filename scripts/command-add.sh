@@ -81,7 +81,7 @@ handle_add_extension_name() {
     if [[ $bom_info == io.quarkus.platform:quarkus-bom:* ]]; then
         handle_add_extension io.quarkus "${artifactId}-deployment" "$version" false "$ROOT_DIR/deployment/pom.xml"
     else
-        echo "Error: Cannot find the extension. Specify it as GAV (groupId:artifactId:version)"
+        echo "Error: Cannot find the extension. Specify it as GAV (groupId:artifactId:version)" >&2
         exit 1
     fi
 
@@ -91,10 +91,10 @@ handle_add_extension_name() {
 handle_command_add() {
     # Check if additional arguments were provided
     if [ $# -eq 0 ]; then
-        echo "Error: No extension name or GAV provided."
+        echo "Error: No extension name or GAV provided." >&2
         exit 1
     elif [ $# -gt 1 ]; then
-        echo "Error: You can specify only one extension at a time."
+        echo "Error: You can specify only one extension at a time." >&2
         exit 1
     fi
     input="$1"

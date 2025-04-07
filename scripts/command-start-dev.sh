@@ -27,7 +27,7 @@ handle_command_start_dev() {
             # Extract value from option
             version="${1#*=}"
             if [[ -z "$version" || "$version" == "$1" ]]; then
-                echo "Error: Missing value for --version."
+                echo "Error: Missing value for --version." >&2
                 exit 1
             fi
             echo "Extended Keycloak version set to: $version"
@@ -40,7 +40,7 @@ handle_command_start_dev() {
             additional_args+=("$1")
             ;;
         *)
-            echo "Unknown option: $1"
+            echo "Unknown option: $1" >&2
             echo "Type ./kc-extension.sh start-dev --help' for available options."
             exit 1
             ;;
@@ -58,8 +58,8 @@ handle_command_start_dev() {
 
     # Check whether zip exists
     if [ ! -f "$keycloak_zip" ]; then
-        echo "Error: No Keycloak distribution zip file found in target directory. ("$keycloak_zip")"
-        echo "Did you execute the './kc-extension.sh build' command before?"
+        echo "Error: No Keycloak distribution zip file found in target directory. ("$keycloak_zip")" >&2
+        echo "Did you execute the './kc-extension.sh build' command before?" >&2
         exit 1
     fi
 

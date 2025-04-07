@@ -50,7 +50,7 @@ handle_command_build() {
             # Extract value from option
             keycloak_version="${1#*=}"
             if [[ -z "$keycloak_version" || "$keycloak_version" == "$1" ]]; then
-                echo "Error: Missing value for --keycloak-version."
+                echo "Error: Missing value for --keycloak-version." >&2
                 exit 1
             fi
 
@@ -71,7 +71,7 @@ handle_command_build() {
             exit 0
             ;;
         *)
-            echo "Unknown build option: $1"
+            echo "Unknown build option: $1" >&2
             echo "Type './kc-extension.sh build --help' for available build options."
             exit 1
             ;;
@@ -92,7 +92,7 @@ handle_command_build() {
     # Get Quarkus version from Keycloak known releases or from pom.xml if not set
     if [[ -z "$quarkus_version" ]]; then
         if [[ "$keycloak_version" == "999.0.0-SNAPSHOT" ]]; then
-            echo "You need to specify --quarkus-version when building on top of the Keycloak nightly"
+            echo "You need to specify --quarkus-version when building on top of the Keycloak nightly" >&2
             exit 1
         fi
         

@@ -39,8 +39,8 @@ handle_command_image() {
             exit 0
             ;;
         *)
-            echo "Unknown option: $1"
-            echo "Type './kc-extension.sh image --help' for available options."
+            echo "Unknown option: $1" >&2
+            echo "Type './kc-extension.sh image --help' for available options." >&2
             exit 1
             ;;
         esac
@@ -65,7 +65,7 @@ handle_command_image() {
     fi
 
     if [ ! -f "$ROOT_DIR/keycloak-extended-$version.tar.gz" ]; then
-        echo "Error: No extended Keycloak distribution (keycloak-extended-$version.tar.gz) found in root directory. Did you execute 'build' command?"
+        echo "Error: No extended Keycloak distribution (keycloak-extended-$version.tar.gz) found in root directory. Did you execute 'build' command?" >&2
     fi
 
     # Determine the container engine
