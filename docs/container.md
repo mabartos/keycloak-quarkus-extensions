@@ -15,6 +15,8 @@ To create the builder image, execute:
 ./kc-extension.sh image
 ```
 
+**INFO**: You need to have `curl` installed. 
+
 It will create an image `keycloak-extended` with tag of used version (`nightly` by default).
 
 **INFO**: If you use `docker` instead of `podman`, you should add option `--use-docker`.
