@@ -81,9 +81,14 @@ handle_command_image() {
 
     echo "Building extended Keycloak container image with $container_engine..."
 
+    # Explicitly fetch ubi-null.sh script
+    curl -s -o ubi-null.sh "https://raw.githubusercontent.com/keycloak/keycloak/$image_version/quarkus/container/ubi-null.sh"
+
     # Execute the container build command
     $container_engine build -t "$name":"$image_version" --build-arg=KEYCLOAK_DIST=keycloak-extended-"$version".tar.gz -f https://raw.githubusercontent.com/keycloak/keycloak/"$image_version"/quarkus/container/Dockerfile "$ROOT_DIR"
 
+    # Remove the fetched ubi-null.sh script
+    rm ubi-null.sh
 }
 
 handle_command_image "$@"
