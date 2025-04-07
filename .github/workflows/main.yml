@@ -29,3 +29,16 @@ jobs:
         run: |
           set -e
           ./kc-extension.sh build
+      
+      - name: Install Podman
+        run: |
+          sudo apt update
+          sudo apt -y install podman
+
+      - name: Verify Podman version
+        run: podman --version
+        
+      - name: Run Keycloak Extensions Image
+        working-directory: keycloak
+        run: |
+          ./kc-extension.sh image    
