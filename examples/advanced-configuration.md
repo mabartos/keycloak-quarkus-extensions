@@ -4,16 +4,17 @@ You can achieve much more with the configuration of the tool and the advanced co
 
 ## Different Keycloak version
 
-If you want to add extensions to some other version of Keycloak, you can specify the version.
-Be aware that the Quarkus version needs to be explicitly set (for now) and be aligned with the Keycloak version.
-You can find the Quarkus version in the parent `pom.xml` of the specific Keycloak version -
-for [Keycloak 25.0.6](https://github.com/keycloak/keycloak/blob/25.0.6/pom.xml#L48).
-
-Use the `--keycloak-version`, and `--quarkus-version` properties for the `build` command as follows for Keycloak 25.0.6:
+Use the `--keycloak-version` property for the `build` command as follows for Keycloak 25.0.6:
 
 ```shell
-./kc-extension.sh build --keycloak-version=25.0.6 --quarkus-version=3.8.5
+./kc-extension.sh build --keycloak-version=25.0.6
 ```
+
+**INFO:** 
+We need to know the Quarkus version tied with the certain Keycloak release.
+We use Quarkus version for known Keycloak releases and if not found, using the one specified in the parent `pom.xml`.
+Find the Quarkus version in the Keycloak parent `pom.xml` of the specific Keycloak version (if any issue occurs) -
+for [Keycloak 25.0.6](https://github.com/keycloak/keycloak/blob/25.0.6/pom.xml#L48).
 
 ## Dev start for a different extended Keycloak version
 

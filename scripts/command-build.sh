@@ -15,6 +15,24 @@ show_help_build() {
     echo "  -h, --help                      Displays this help message."
 }
 
+get_quarkus_version_for_keycloak() {
+    # Get Quarkus version based on known versions in Keycloak releases
+    local keycloak_version="$1"
+
+    case "$keycloak_version" in
+    26.1.* | 26.0.*)
+        echo "3.15.3.1"
+        ;;
+    25.*)
+        echo "3.8.5"
+        ;;
+    *)
+        echo "Unknown Quarkus version for Keycloak '$keycloak_version'. Use explicitly --quarkus-version property." >&2
+        return 1
+        ;;
+    esac
+}
+
 handle_command_build() {
     # Initialize variables
     keycloak_version=""
@@ -36,10 +54,6 @@ handle_command_build() {
         --quarkus-version*)
             # Extract value from option
             quarkus_version="${1#*=}"
-            if [[ -z "$quarkus_version" || "$quarkus_version" == "$1" ]]; then
-                echo "Error: Missing value for --quarkus-version."
-                exit 1
-            fi
             echo "Quarkus version set to: $quarkus_version"
             ;;
         -h | --help)
@@ -55,19 +69,23 @@ handle_command_build() {
         shift
     done
 
-    # Get keycloak version from pom.xml only if it's not set
+    # Get Keycloak version from pom.xml only if it's not set
     if [[ -z "$keycloak_version" ]]; then
         keycloak_version=$(get_keycloak_version_from_pom) # Get default keycloak version from pom.xml
-        echo "Using keycloak version from pom.xml: $keycloak_version"
+        echo "Using Keycloak version from pom.xml: $keycloak_version"
     fi
 
-    # Get quarkus version from pom.xml only if it's not set
+    # Get Quarkus version from Keycloak known releases or from pom.xml if not set
     if [[ -z "$quarkus_version" ]]; then
-        quarkus_version=$(get_quarkus_version_from_pom) # Get default quarkus version from pom.xml
-        echo "Using quarkus version from pom.xml: $quarkus_version"
+        if quarkus_version=$(get_quarkus_version_for_keycloak "$keycloak_version"); then
+            echo "Using inferred Quarkus version: $quarkus_version"
+        else
+            quarkus_version=$(get_quarkus_version_from_pom)
+            echo "Using Quarkus version from pom.xml: $quarkus_version"
+        fi
     fi
 
-    # Build logic goes here using $keycloak_version, and $quarkus_version variables
+    # Build the distribution
     echo "Executing build with '--keycloak-version': $keycloak_version, and '--quarkus-version': $quarkus_version"
     echo "Additional properties: $additional_properties"
     "$ROOT_DIR"/mvnw clean install -f "$ROOT_DIR"/pom.xml -DskipTests -Dkeycloak.version="$keycloak_version" -Dquarkus.version="$quarkus_version" $additional_properties
