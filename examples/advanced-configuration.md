@@ -2,6 +2,16 @@
 
 You can achieve much more with the configuration of the tool and the advanced configuration is described here.
 
+## Build on top of Keycloak nightly
+
+Set the `--keycloak-version` property for the `build` command to `main` with the `--quarkus-version` set to the one used in [nightly build](https://github.com/keycloak/keycloak/blob/nightly/pom.xml#L55).
+
+Example:
+
+```shell
+./kc-extension.sh build --keycloak-version=main --quarkus-version=3.20.0
+```
+
 ## Different Keycloak version
 
 Use the `--keycloak-version` property for the `build` command as follows for Keycloak 25.0.6:

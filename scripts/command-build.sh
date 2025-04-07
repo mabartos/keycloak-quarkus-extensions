@@ -85,8 +85,17 @@ handle_command_build() {
         echo "Using Keycloak version from pom.xml: $keycloak_version"
     fi
 
+    if [[ "$keycloak_version" == "999.0.0-SNAPSHOT" ]]; then
+        echo "Be aware that in order to use Keycloak nightly, you need to rebuild Keycloak repository in your local."
+    fi
+
     # Get Quarkus version from Keycloak known releases or from pom.xml if not set
     if [[ -z "$quarkus_version" ]]; then
+        if [[ "$keycloak_version" == "999.0.0-SNAPSHOT" ]]; then
+            echo "You need to specify --quarkus-version when building on top of the Keycloak nightly"
+            exit 1
+        fi
+        
         if quarkus_version=$(get_quarkus_version_for_keycloak "$keycloak_version"); then
             echo "Using inferred Quarkus version: $quarkus_version"
         else
