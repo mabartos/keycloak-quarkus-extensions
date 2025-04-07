@@ -26,6 +26,10 @@ get_quarkus_version_for_keycloak() {
     25.*)
         echo "3.8.5"
         ;;
+    999.0.0-SNAPSHOT)
+        echo "Quarkus version will be get from pom.xml"
+        return 1
+        ;;
     *)
         echo "Unknown Quarkus version for Keycloak '$keycloak_version'. Use explicitly --quarkus-version property." >&2
         return 1
@@ -49,6 +53,12 @@ handle_command_build() {
                 echo "Error: Missing value for --keycloak-version."
                 exit 1
             fi
+
+            # If keycloak-version is 'main', set it to 999.0.0-SNAPSHOT
+            if [[ "$keycloak_version" == "main" ]]; then
+                keycloak_version="999.0.0-SNAPSHOT"
+            fi
+
             echo "Keycloak version set to: $keycloak_version"
             ;;
         --quarkus-version*)
