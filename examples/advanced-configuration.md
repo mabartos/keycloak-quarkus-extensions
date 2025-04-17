@@ -14,27 +14,27 @@ Example:
 
 ## Different Keycloak version
 
-Use the `--keycloak-version` property for the `build` command as follows for Keycloak 25.0.6:
+Use the `--keycloak-version` property for the `build` command as follows for Keycloak 26.0.8:
 
 ```shell
-./kc-extension.sh build --keycloak-version=25.0.6
+./kc-extension.sh build --keycloak-version=26.0.8
 ```
 
 **INFO:** 
 We need to know the Quarkus version tied with the certain Keycloak release.
 We use Quarkus version for known Keycloak releases and if not found, using the one specified in the parent `pom.xml`.
 Find the Quarkus version in the Keycloak parent `pom.xml` of the specific Keycloak version (if any issue occurs) -
-for [Keycloak 25.0.6](https://github.com/keycloak/keycloak/blob/25.0.6/pom.xml#L48).
+for [Keycloak 26.0.8](https://github.com/keycloak/keycloak/blob/26.0.8/pom.xml#L54).
 
 ## Dev start for a different extended Keycloak version
 
 If you want to start in dev mode the extended Keycloak distribution, but you have generated more distributions with
 different versions, you can set the required version.
 
-Use the `--version` option for the `start-dev` command for generated distribution with version 25.0.6 as follows:
+Use the `--version` option for the `start-dev` command for generated distribution with version 26.0.8 as follows:
 
 ```shell
-./kc-extension.sh start-dev --version=25.0.6
+./kc-extension.sh start-dev --version=26.0.8
 ```
 
 ## Container
@@ -53,10 +53,10 @@ If you want to use `docker` instead, use the `--use-docker` option as follows:
 If you generated extended Keycloak distribution with different version and want to create the builder image for it, you
 need to specify the version of the distribution.
 
-You can leverage the `--version` option for the `image` command for version 25.0.6 as follows:
+You can leverage the `--version` option for the `image` command for version 26.0.8 as follows:
 
 ```shell
-./kc-extension.sh image --version=25.0.6
+./kc-extension.sh image --version=26.0.8
 ```
 
 ### Use different name for the builder image

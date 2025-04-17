@@ -23,9 +23,6 @@ get_quarkus_version_for_keycloak() {
     26.1.* | 26.0.*)
         echo "3.15.3.1"
         ;;
-    25.*)
-        echo "3.8.5"
-        ;;
     999.0.0-SNAPSHOT)
         echo "Quarkus version will be get from pom.xml"
         return 1
