@@ -33,3 +33,8 @@ You can have a seamless integration of LLMs in your Keycloak extensions.
 ![ECS](https://img.shields.io/badge/Extension-quarkus--opentelemetry--exporter--gcp-blue?style=for-the-badge)
 
 Quarkiverse extension for using OpenTelemetry GCP Exporter to send data to Google Cloud Platform. 
+
+### [Keycloak Adaptive Authentication](keycloak-adaptive-authn.md)
+![ECS](https://img.shields.io/badge/Extension-keycloak--adaptive--authn-blue?style=for-the-badge)
+
+Custom Keycloak extension for leveraging Adaptive Authentication in Keycloak.
