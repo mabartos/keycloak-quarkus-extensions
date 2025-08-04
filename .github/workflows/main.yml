@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        keycloak-version: [ 26.3.0, 26.2.5, 26.1.4 ]
+        keycloak-version: [ 26.3.2, 26.2.6, 26.1.4 ]
     name: Keycloak ${{ matrix.keycloak-version }}
     steps:
       - name: Checkout repository
