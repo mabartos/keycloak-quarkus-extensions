@@ -52,8 +52,8 @@ Now, you should be able to access extended nightly Keycloak instance at `localho
 
 The `build` command generates extended Keycloak distribution as files:
 
-* `keycloak-extended-26.3.2.tar.gz`
-* `keycloak-extended-26.3.2.zip`
+* `keycloak-extended-26.4.1.tar.gz`
+* `keycloak-extended-26.4.1.zip`
 
 For more options how to build the distribution, check the [Advanced configuration](examples/advanced-configuration.md) guide or execute:
 ```shell

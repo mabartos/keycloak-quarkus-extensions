@@ -20,6 +20,9 @@ get_quarkus_version_for_keycloak() {
     local keycloak_version="$1"
 
     case "$keycloak_version" in
+    26.4.*)
+        echo "3.27.0"
+        ;;
     26.3.*)
         echo "3.20.2"
         ;;
