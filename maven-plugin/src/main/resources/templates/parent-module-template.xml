@@ -4,23 +4,22 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.keycloak</groupId>
-    <artifactId>keycloak-quarkus-extensions</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>org.keycloak.custom</groupId>
+    <artifactId>keycloak-custom-extensions-parent</artifactId>
+    <version>1.0.0</version>
 
     <packaging>pom</packaging>
-    <name>Keycloak Quarkus Extensions Parent</name>
+    <name>Keycloak Custom Extensions Parent</name>
 
     <properties>
-        <keycloak.version>26.4.1</keycloak.version>
-        <!-- Quarkus version needs to be aligned with the Keycloak version -->
-        <quarkus.version>3.27.0</quarkus.version>
+        <keycloak.version>@KEYCLOAK_VERSION@</keycloak.version>
+        <quarkus.version>@QUARKUS_VERSION@</quarkus.version>
 
         <keycloak.distribution.name>keycloak-${keycloak.version}</keycloak.distribution.name>
         <keycloak.distribution.path>
             ${project.build.directory}/unpacked/${keycloak.distribution.name}
         </keycloak.distribution.path>
-        <keycloak.distribution.final.name>keycloak-extended-${keycloak.version}</keycloak.distribution.final.name>
+        <keycloak.distribution.final.name>@FINAL_NAME@</keycloak.distribution.final.name>
 
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -35,7 +34,6 @@
         <module>runtime</module>
         <module>deployment</module>
         <module>resolver</module>
-        <module>maven-plugin</module>
     </modules>
 
     <dependencyManagement>
@@ -76,29 +74,5 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <repositories>
-        <repository>
-            <id>sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
-    <profiles>
-        <profile>
-            <id>cli-new</id>
-            <activation>
-                <property>
-                    <name>cli-new</name>
-                </property>
-            </activation>
-            <modules>
-                <module>cli</module>
-            </modules>
-        </profile>
-    </profiles>
 
 </project>
