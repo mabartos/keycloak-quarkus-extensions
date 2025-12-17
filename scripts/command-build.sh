@@ -21,7 +21,7 @@ get_quarkus_version_for_keycloak() {
 
     case "$keycloak_version" in
     26.4.*)
-        echo "3.27.0"
+        echo "3.27.1"
         ;;
     26.3.*)
         echo "3.20.3"
