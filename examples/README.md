@@ -34,6 +34,11 @@ You can have a seamless integration of LLMs in your Keycloak extensions.
 
 Quarkiverse extension for using OpenTelemetry GCP Exporter to send data to Google Cloud Platform. 
 
+### [Micrometer OpenTelemetry Bridge](micrometer-opentelemetry.md)
+![](https://img.shields.io/badge/Extension-quarkus--micrometer--opentelemetry-blue?style=for-the-badge)
+
+Quarkus extension providing bridge that enables sending Micrometer metrics via OpenTelemetry.
+
 ### [Keycloak Adaptive Authentication](keycloak-adaptive-authn.md)
 ![ECS](https://img.shields.io/badge/Extension-keycloak--adaptive--authn-blue?style=for-the-badge)
 
