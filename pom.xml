@@ -12,7 +12,7 @@
     <name>Keycloak Quarkus Extensions Parent</name>
 
     <properties>
-        <keycloak.version>26.4.7</keycloak.version>
+        <keycloak.version>26.5.0</keycloak.version>
         <!-- Quarkus version needs to be aligned with the Keycloak version -->
         <quarkus.version>3.27.1</quarkus.version>
 
