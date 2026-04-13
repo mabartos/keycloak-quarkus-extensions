@@ -28,6 +28,16 @@ Commands:
 
 For more advanced use-cases, see the [Configuration guides](examples/README.md#configuration).
 
+## Supported Keycloak versions
+
+| Keycloak | Quarkus |
+|----------|---------|
+| 26.6.x   | 3.33.1  |
+| 26.5.x   | 3.27.2  |
+| 26.4.x   | 3.27.2  |
+| 26.3.x   | 3.20.5  |
+| 26.2.x   | 3.20.5  |
+
 ## Your first extended Keycloak
 
 How to add your first extensions to your Keycloak deployment? Follow this simple guidelines:
