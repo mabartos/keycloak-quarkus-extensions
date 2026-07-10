@@ -20,20 +20,23 @@ get_quarkus_version_for_keycloak() {
     local keycloak_version="$1"
 
     case "$keycloak_version" in
+    26.7.*)
+        echo "3.33.2.1"
+        ;;
     26.6.*)
-        echo "3.33.1"
+        echo "3.33.2.1"
         ;;
     26.5.*)
         echo "3.27.2"
         ;;
     26.4.*)
-        echo "3.27.2"
+        echo "3.27.4.1"
         ;;
     26.3.*)
-        echo "3.20.5"
+        echo "3.20.6"
         ;;
     26.2.*)
-        echo "3.20.5"
+        echo "3.20.6"
         ;;
     999.0.0-SNAPSHOT)
         echo "Quarkus version will be get from pom.xml"
