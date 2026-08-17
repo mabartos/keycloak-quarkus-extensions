@@ -1,0 +1,87 @@
+name: Update Keycloak/Quarkus Versions
+
+on:
+  schedule:
+    - cron: "0 3 * * *"  # Runs every night at 3 AM UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-versions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for version updates
+        id: check
+        run: |
+          VERSIONS_FILE="keycloak-quarkus-versions.properties"
+          UPDATED=false
+
+          # Update release versions
+          while IFS='=' read -r minor current_entry; do
+            # Skip comments and empty lines
+            [[ "$minor" =~ ^#.*$ || -z "$minor" ]] && continue
+
+            if [[ "$minor" == "nightly" ]]; then
+              # Fetch Quarkus version from Keycloak main branch
+              quarkus_version=$(curl -sf "https://raw.githubusercontent.com/keycloak/keycloak/main/pom.xml" \
+                | grep -A1 '<quarkus.version>' | grep -oP '>\K[^<]+' | head -1)
+              if [[ -n "$quarkus_version" ]]; then
+                new_entry="999.0.0-SNAPSHOT:${quarkus_version}"
+                if [[ "$current_entry" != "$new_entry" ]]; then
+                  sed -i "s|^nightly=.*|nightly=${new_entry}|" "$VERSIONS_FILE"
+                  echo "Updated nightly Quarkus: ${current_entry#*:} -> ${quarkus_version}"
+                  UPDATED=true
+                fi
+              fi
+              continue
+            fi
+
+            current_kc="${current_entry%%:*}"
+            current_quarkus="${current_entry#*:}"
+
+            # Fetch latest Keycloak release for this minor version
+            latest_kc=$(curl -sf "https://api.github.com/repos/keycloak/keycloak/releases" \
+              | jq -r "[.[].tag_name | select(startswith(\"${minor}.\"))] | sort_by(split(\".\") | map(tonumber? // 0)) | last // empty")
+
+            if [[ -z "$latest_kc" ]]; then
+              echo "No release found for ${minor}.x, skipping"
+              continue
+            fi
+
+            # Fetch Quarkus version from the release branch
+            quarkus_version=$(curl -sf "https://raw.githubusercontent.com/keycloak/keycloak/release/${minor}/pom.xml" \
+              | grep -A1 '<quarkus.version>' | grep -oP '>\K[^<]+' | head -1)
+
+            if [[ -z "$quarkus_version" ]]; then
+              echo "Could not fetch Quarkus version for ${minor}, skipping"
+              continue
+            fi
+
+            new_entry="${latest_kc}:${quarkus_version}"
+            if [[ "$current_entry" != "$new_entry" ]]; then
+              sed -i "s|^${minor}=.*|${minor}=${new_entry}|" "$VERSIONS_FILE"
+              echo "Updated ${minor}: ${current_entry} -> ${new_entry}"
+              UPDATED=true
+            fi
+          done < "$VERSIONS_FILE"
+
+          echo "updated=${UPDATED}" >> "$GITHUB_OUTPUT"
+
+      - name: Create Pull Request
+        if: steps.check.outputs.updated == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "Update Keycloak/Quarkus versions"
+          title: "Update Keycloak/Quarkus versions"
+          body: |
+            Automated update of Keycloak and Quarkus versions in `keycloak-quarkus-versions.properties`.
+
+            Please review the version changes and merge if they look correct.
+          branch: automated/update-versions
+          delete-branch: true
