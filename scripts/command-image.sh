@@ -66,6 +66,7 @@ handle_command_image() {
 
     if [ ! -f "$ROOT_DIR/keycloak-extended-$version.tar.gz" ]; then
         echo "Error: No extended Keycloak distribution (keycloak-extended-$version.tar.gz) found in root directory. Did you execute 'build' command?" >&2
+        exit 1
     fi
 
     # Determine the container engine
