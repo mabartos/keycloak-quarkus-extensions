@@ -27,3 +27,13 @@ get_quarkus_version_from_pom() {
     echo "$version"
 }
 
+# Function to get quarkus.keycloak.nightly.version from pom.xml
+get_quarkus_nightly_version_from_pom() {
+    version=$("$ROOT_DIR"/mvnw -f "$ROOT_DIR"/pom.xml help:evaluate -Dexpression=quarkus.keycloak.nightly.version -q -DforceStdout)
+    if [[ -z "$version" ]]; then
+        echo "Error: No quarkus.keycloak.nightly.version found in pom.xml." >&2
+        exit 1
+    fi
+    echo "$version"
+}
+

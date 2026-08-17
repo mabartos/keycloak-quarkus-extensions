@@ -12,6 +12,7 @@ show_help_build() {
     echo "Options:"
     echo "  --keycloak-version <version>    Specify the Keycloak version. Defaults to version from 'pom.xml' if not provided."
     echo "  --quarkus-version <version>     Specify the Quarkus version. Defaults to version from 'pom.xml' if not provided."
+    echo "  --nightly                       Build using Keycloak nightly (main branch)."
     echo "  -h, --help                      Displays this help message."
 }
 
@@ -38,10 +39,6 @@ get_quarkus_version_for_keycloak() {
     26.2.*)
         echo "3.20.6.1"
         ;;
-    999.0.0-SNAPSHOT)
-        echo "Quarkus version will be get from pom.xml"
-        return 1
-        ;;
     *)
         echo "Unknown Quarkus version for Keycloak '$keycloak_version'. Use explicitly --quarkus-version property." >&2
         return 1
@@ -59,6 +56,11 @@ handle_command_build() {
     while [[ $# -gt 0 ]]; do
         case "$1" in
         --keycloak-version*)
+            if [[ "$keycloak_version" == "999.0.0-SNAPSHOT" ]]; then
+                echo "Error: --nightly and --keycloak-version cannot be used together." >&2
+                exit 1
+            fi
+
             # Extract value from option
             keycloak_version="${1#*=}"
             if [[ -z "$keycloak_version" || "$keycloak_version" == "$1" ]]; then
@@ -77,6 +79,14 @@ handle_command_build() {
             # Extract value from option
             quarkus_version="${1#*=}"
             echo "Quarkus version set to: $quarkus_version"
+            ;;
+        --nightly)
+            if [[ -n "$keycloak_version" ]]; then
+                echo "Error: --nightly and --keycloak-version cannot be used together." >&2
+                exit 1
+            fi
+            keycloak_version="999.0.0-SNAPSHOT"
+            echo "Using Keycloak nightly build"
             ;;
         -h | --help)
             show_help_build
@@ -104,11 +114,9 @@ handle_command_build() {
     # Get Quarkus version from Keycloak known releases or from pom.xml if not set
     if [[ -z "$quarkus_version" ]]; then
         if [[ "$keycloak_version" == "999.0.0-SNAPSHOT" ]]; then
-            echo "You need to specify --quarkus-version when building on top of the Keycloak nightly" >&2
-            exit 1
-        fi
-        
-        if quarkus_version=$(get_quarkus_version_for_keycloak "$keycloak_version"); then
+            quarkus_version=$(get_quarkus_nightly_version_from_pom)
+            echo "Using Quarkus nightly version from pom.xml: $quarkus_version"
+        elif quarkus_version=$(get_quarkus_version_for_keycloak "$keycloak_version"); then
             echo "Using inferred Quarkus version: $quarkus_version"
         else
             quarkus_version=$(get_quarkus_version_from_pom)
