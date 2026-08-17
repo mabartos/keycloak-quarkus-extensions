@@ -40,7 +40,11 @@ jobs:
           git config user.name "${BOT_NAME}"
           git config user.email "${BOT_EMAIL}"
           git add -u
-          git commit -s -m "Release ${VERSION}"
+          if git diff --cached --quiet; then
+            echo "Version already set, skipping commit"
+          else
+            git commit -s -m "Release ${VERSION}"
+          fi
           git tag -f "${VERSION}"
           git push origin "${VERSION}" --force
 
