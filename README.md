@@ -35,9 +35,7 @@ For more advanced use-cases, see the [Configuration guides](examples/README.md#c
 | nightly  | 3.38.1   |
 | 26.7.x   | 3.33.3.1 |
 | 26.6.x   | 3.33.3.1 |
-| 26.5.x   | 3.27.3   |
 | 26.4.x   | 3.27.5.1 |
-| 26.3.x   | 3.20.6.1 |
 | 26.2.x   | 3.20.6.1 |
 
 ## Your first extended Keycloak

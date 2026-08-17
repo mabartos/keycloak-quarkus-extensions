@@ -12,11 +12,9 @@
     <name>Keycloak Quarkus Extensions Parent</name>
 
     <properties>
-        <keycloak.version>26.7.0</keycloak.version>
+        <keycloak.version>26.7.1</keycloak.version>
         <!-- Quarkus version needs to be aligned with the Keycloak version -->
         <quarkus.version>3.33.3.1</quarkus.version>
-        <!-- Quarkus version for Keycloak nightly (main branch) builds -->
-        <quarkus.keycloak.nightly.version>3.38.1</quarkus.keycloak.nightly.version>
 
         <keycloak.distribution.name>keycloak-${keycloak.version}</keycloak.distribution.name>
         <keycloak.distribution.path>

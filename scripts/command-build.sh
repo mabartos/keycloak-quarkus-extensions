@@ -16,36 +16,6 @@ show_help_build() {
     echo "  -h, --help                      Displays this help message."
 }
 
-get_quarkus_version_for_keycloak() {
-    # Get Quarkus version based on known versions in Keycloak releases
-    local keycloak_version="$1"
-
-    case "$keycloak_version" in
-    26.7.*)
-        echo "3.33.3.1"
-        ;;
-    26.6.*)
-        echo "3.33.3.1"
-        ;;
-    26.5.*)
-        echo "3.27.3"
-        ;;
-    26.4.*)
-        echo "3.27.5.1"
-        ;;
-    26.3.*)
-        echo "3.20.6.1"
-        ;;
-    26.2.*)
-        echo "3.20.6.1"
-        ;;
-    *)
-        echo "Unknown Quarkus version for Keycloak '$keycloak_version'. Use explicitly --quarkus-version property." >&2
-        return 1
-        ;;
-    esac
-}
-
 handle_command_build() {
     # Initialize variables
     keycloak_version=""
@@ -114,8 +84,8 @@ handle_command_build() {
     # Get Quarkus version from Keycloak known releases or from pom.xml if not set
     if [[ -z "$quarkus_version" ]]; then
         if [[ "$keycloak_version" == "999.0.0-SNAPSHOT" ]]; then
-            quarkus_version=$(get_quarkus_nightly_version_from_pom)
-            echo "Using Quarkus nightly version from pom.xml: $quarkus_version"
+            quarkus_version=$(get_quarkus_nightly_version)
+            echo "Using Quarkus nightly version: $quarkus_version"
         elif quarkus_version=$(get_quarkus_version_for_keycloak "$keycloak_version"); then
             echo "Using inferred Quarkus version: $quarkus_version"
         else
