@@ -1,0 +1,96 @@
+<assembly>
+    <id>release</id>
+
+    <formats>
+        <format>zip</format>
+        <format>tar.gz</format>
+    </formats>
+
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <baseDirectory>kc-extensions-${project.version}</baseDirectory>
+
+    <fileSets>
+        <!-- Root files -->
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory/>
+            <includes>
+                <include>kc-extension.sh</include>
+                <include>README.md</include>
+                <include>LICENSE</include>
+                <include>pom.xml</include>
+                <include>mvnw</include>
+                <include>mvnw.cmd</include>
+                <include>quarkus.properties</include>
+                <include>keycloak-quarkus-versions.properties</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>.mvn</directory>
+            <outputDirectory>.mvn</outputDirectory>
+        </fileSet>
+        <!-- Source modules -->
+        <fileSet>
+            <directory>scripts</directory>
+            <outputDirectory>scripts</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>runtime</directory>
+            <outputDirectory>runtime</outputDirectory>
+            <includes>
+                <include>pom.xml</include>
+                <include>src/**</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>deployment</directory>
+            <outputDirectory>deployment</outputDirectory>
+            <includes>
+                <include>pom.xml</include>
+                <include>src/**</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>resolver</directory>
+            <outputDirectory>resolver</outputDirectory>
+            <includes>
+                <include>pom.xml</include>
+                <include>assembly.xml</include>
+                <include>src/**</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>cli</directory>
+            <outputDirectory>cli</outputDirectory>
+            <includes>
+                <include>pom.xml</include>
+                <include>README.md</include>
+                <include>src/**</include>
+            </includes>
+        </fileSet>
+        <!-- Documentation -->
+        <fileSet>
+            <directory>docs</directory>
+            <outputDirectory>docs</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>examples</directory>
+            <outputDirectory>examples</outputDirectory>
+        </fileSet>
+    </fileSets>
+
+    <files>
+        <file>
+            <source>kc-extension.sh</source>
+            <outputDirectory/>
+            <fileMode>0755</fileMode>
+        </file>
+        <file>
+            <source>mvnw</source>
+            <outputDirectory/>
+            <fileMode>0755</fileMode>
+        </file>
+    </files>
+
+</assembly>
