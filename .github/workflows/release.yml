@@ -1,26 +1,69 @@
 name: Release
 
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g. 1.6.0)'
+        required: true
+        type: string
+      previous_tag:
+        description: 'Previous tag for release notes diff (e.g. 1.5.0). Defaults to latest existing tag.'
+        required: false
+        type: string
 
 permissions:
   contents: write
 
+env:
+  VERSION: ${{ inputs.version }}
+  BOT_NAME: github-actions[bot]
+  BOT_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+
 jobs:
-  upload-assets:
+  release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set release version
+        run: ./set-version.sh "${VERSION}"
 
       - name: Build release archive
-        run: ./mvnw package -Prelease-archive -DskipTests -N
+        run: ./mvnw -B -ntp package -Prelease-archive -DskipTests -N
 
-      - name: Upload release assets
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Tag version commit
         run: |
-          gh release upload "${{ github.event.release.tag_name }}" \
-            target/kc-extensions-*.tar.gz \
+          git config user.name "${BOT_NAME}"
+          git config user.email "${BOT_EMAIL}"
+          git add -u
+          git commit -s -m "Release ${VERSION}"
+          git tag -f "${VERSION}"
+          git push origin "${VERSION}" --force
+
+      - name: Determine previous tag
+        id: prev-tag
+        run: |
+          if [[ -n "${{ inputs.previous_tag }}" ]]; then
+            echo "tag=${{ inputs.previous_tag }}" >> "$GITHUB_OUTPUT"
+          else
+            prev=$(git tag --sort=-v:refname | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | grep -v "^${VERSION}$" | head -1)
+            echo "tag=${prev}" >> "$GITHUB_OUTPUT"
+          fi
+          echo "Previous tag: $(cat "$GITHUB_OUTPUT" | grep tag)"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.VERSION }}
+          name: ${{ env.VERSION }}
+          generate_release_notes: true
+          make_latest: true
+          files: |
+            target/kc-extensions-*.tar.gz
             target/kc-extensions-*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
