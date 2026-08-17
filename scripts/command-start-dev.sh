@@ -11,6 +11,7 @@ show_help_start_dev() {
     echo
     echo "Options:"
     echo "  --version <version>             Specify the version of generated extended Keycloak distribution. Defaults to Keycloak version from 'pom.xml' if not provided."
+    echo "  --nightly                       Use the nightly Keycloak distribution."
     echo "  -h, --help                      Displays this help message."
     echo
     echo "Arguments:"
@@ -24,6 +25,11 @@ handle_command_start_dev() {
     while [[ $# -gt 0 ]]; do
         case "$1" in
         --version*)
+            if [[ "$version" == "999.0.0-SNAPSHOT" ]]; then
+                echo "Error: --nightly and --version cannot be used together." >&2
+                exit 1
+            fi
+
             # Extract value from option
             version="${1#*=}"
             if [[ -z "$version" || "$version" == "$1" ]]; then
@@ -31,6 +37,14 @@ handle_command_start_dev() {
                 exit 1
             fi
             echo "Extended Keycloak version set to: $version"
+            ;;
+        --nightly)
+            if [[ -n "$version" ]]; then
+                echo "Error: --nightly and --version cannot be used together." >&2
+                exit 1
+            fi
+            version="999.0.0-SNAPSHOT"
+            echo "Using Keycloak nightly distribution"
             ;;
         -h | --help)
             show_help_start_dev
