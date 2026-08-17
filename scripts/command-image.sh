@@ -55,11 +55,6 @@ handle_command_image() {
 
     # Set default image name if not provided
     if [[ -z "$name" ]]; then
-        local name_version=""
-        if [[ "$version" == "999.0.0-SNAPSHOT" ]]; then
-            name_version="999.0.0"
-        fi
-
         name="keycloak-extended"
         echo "Using default image name: $name"
     fi
