@@ -71,6 +71,13 @@ jobs:
             fi
           done < "$VERSIONS_FILE"
 
+          # Keep the README support table aligned with the versions used by the build script.
+          ./scripts/update-readme-versions.sh
+
+          if ! git diff --quiet -- README.md; then
+            UPDATED=true
+          fi
+
           echo "updated=${UPDATED}" >> "$GITHUB_OUTPUT"
 
       - name: Create Pull Request
@@ -80,7 +87,7 @@ jobs:
           commit-message: "Update Keycloak/Quarkus versions"
           title: "Update Keycloak/Quarkus versions"
           body: |
-            Automated update of Keycloak and Quarkus versions in `keycloak-quarkus-versions.properties`.
+            Automated update of Keycloak and Quarkus versions in `keycloak-quarkus-versions.properties` and the README supported-version table.
 
             Please review the version changes and merge if they look correct.
           branch: automated/update-versions
