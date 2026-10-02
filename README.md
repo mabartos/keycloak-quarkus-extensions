@@ -37,7 +37,6 @@ For more advanced use-cases, see the [Configuration guides](examples/README.md#c
 | 26.7.x   | 3.33.4   |
 | 26.6.x   | 3.33.4   |
 | 26.4.x   | 3.27.6   |
-| 26.2.x   | 3.20.6.1 |
 
 ## Your first extended Keycloak
 
