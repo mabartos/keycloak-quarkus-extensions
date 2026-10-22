@@ -32,7 +32,7 @@ For more advanced use-cases, see the [Configuration guides](examples/README.md#c
 
 | Keycloak | Quarkus  |
 |----------|----------|
-| nightly  | 3.40.1   |
+| nightly  | 3.40.1.1 |
 | 26.8.x   | 3.40.1   |
 | 26.7.x   | 3.33.4   |
 | 26.6.x   | 3.33.4   |
