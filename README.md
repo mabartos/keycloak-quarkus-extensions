@@ -33,10 +33,10 @@ For more advanced use-cases, see the [Configuration guides](examples/README.md#c
 | Keycloak | Quarkus  |
 |----------|----------|
 | nightly  | 3.40.1.1 |
-| 26.8.x   | 3.40.1   |
+| 26.8.x   | 3.40.1.1 |
 | 26.7.x   | 3.33.4   |
-| 26.6.x   | 3.33.4   |
-| 26.4.x   | 3.27.6   |
+| 26.6.x   | 3.33.4.1 |
+| 26.4.x   | 3.27.6.1 |
 
 ## Your first extended Keycloak
 
@@ -62,8 +62,8 @@ Now, you should be able to access extended nightly Keycloak instance at `localho
 
 The `build` command generates extended Keycloak distribution as files:
 
-* `keycloak-extended-26.8.1.tar.gz`
-* `keycloak-extended-26.8.1.zip`
+* `keycloak-extended-26.8.2.tar.gz`
+* `keycloak-extended-26.8.2.zip`
 
 For more options how to build the distribution, check the [Advanced configuration](examples/advanced-configuration.md) guide or execute:
 ```shell
